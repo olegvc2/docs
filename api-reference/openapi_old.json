@@ -1,0 +1,587 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Reply API Documentation",
+    "description": "Welcome to the Reply.io API guide. Let's get you integrated smoothly!\n\n# API Endpoint\n\nOur platform utilizes the endpoint: `api.reply.io` We offer two versions of our API: `V1` and `V2`, each with its unique functionalities. You're free to employ both versions in tandem if desired.\n\n# Authentication\n\nTo gain access to the API:\n\n1. Login into your Reply Account\n2. Navigate to `Settings`\n3. Find and copy your API key under `API Key`.\n\n🔑 **API Key Example:** `AKp2BbuyfS-ugPMkBmd3sg2`\n\n# Rate Limits\n\nTo ensure optimal performance and equitable usage for all users, the Reply API has set rate limits:\n\n- **Monthly API Calls**: Each Reply user is allowed up to 15,000 API calls every month.\n- **API Throttling**: There is no general throttling, but certain requests may be subject to throttling, refer to the specific request in this guide for more details.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.reply.io/v1",
+      "description": "Reply API v1"
+    },
+    {
+      "url": "https://api.reply.io/v2",
+      "description": "Reply API v2"
+    }
+  ],
+  "security": [
+    {
+      "apiKeyHeader": []
+    }
+  ],
+  "paths": {
+    "/campaigns": {
+      "get": {
+        "tags": ["Campaigns"],
+        "summary": "Get Campaign Details",
+        "description": "Returns basic campaign details and stats by campaign name or ID",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name of your specified campaign",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID of your specified campaign",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Campaign"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - check input parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User not found"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Resource not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/people": {
+      "get": {
+        "tags": ["People"],
+        "summary": "Get List of Contacts",
+        "description": "Returns a paginated list of contacts",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of items per page",
+            "schema": {
+              "type": "integer",
+              "default": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PeopleResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/email-accounts": {
+      "get": {
+        "summary": "Get Email Accounts",
+        "description": "Retrieve a list of email accounts associated with your account.",
+        "operationId": "getEmailAccounts",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number for pagination",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of items per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filter by account status",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["active", "inactive"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of email accounts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "accounts": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/EmailAccount"
+                      }
+                    },
+                    "total": {
+                      "type": "integer",
+                      "description": "Total number of accounts"
+                    },
+                    "page": {
+                      "type": "integer",
+                      "description": "Current page number"
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "description": "Number of items per page"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create Email Account",
+        "description": "Create a new email account.",
+        "operationId": "createEmailAccount",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "password", "first_name", "last_name"],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "Email address for the account"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password for the email account"
+                  },
+                  "first_name": {
+                    "type": "string",
+                    "description": "First name of the account owner"
+                  },
+                  "last_name": {
+                    "type": "string",
+                    "description": "Last name of the account owner"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Email account created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailAccount"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/email-accounts/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "Email account ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "put": {
+        "summary": "Update Email Account",
+        "description": "Update an existing email account.",
+        "operationId": "updateEmailAccount",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string",
+                    "description": "New password for the email account"
+                  },
+                  "first_name": {
+                    "type": "string",
+                    "description": "Updated first name"
+                  },
+                  "last_name": {
+                    "type": "string",
+                    "description": "Updated last name"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": ["active", "inactive"],
+                    "description": "Account status"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Email account updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailAccount"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete Email Account",
+        "description": "Delete an existing email account.",
+        "operationId": "deleteEmailAccount",
+        "responses": {
+          "204": {
+            "description": "Email account deleted successfully"
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Campaign": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Campaign ID"
+          },
+          "name": {
+            "type": "string",
+            "description": "Campaign name"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation date and time"
+          },
+          "status": {
+            "type": "integer",
+            "description": "Campaign status (0 = New, 2 = Active, 4 = Paused)",
+            "enum": [0, 2, 4]
+          },
+          "emailAccounts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Email accounts used for the campaign"
+          },
+          "ownerEmail": {
+            "type": "string",
+            "description": "Campaign owner's email"
+          },
+          "deliveriesCount": {
+            "type": "integer",
+            "description": "Total emails sent"
+          },
+          "opensCount": {
+            "type": "integer",
+            "description": "Number of opened emails"
+          },
+          "repliesCount": {
+            "type": "integer",
+            "description": "Number of replies received"
+          },
+          "bouncesCount": {
+            "type": "integer",
+            "description": "Number of bounced emails"
+          },
+          "optOutsCount": {
+            "type": "integer",
+            "description": "Number of opt-outs"
+          },
+          "outOfOfficeCount": {
+            "type": "integer",
+            "description": "Number of out-of-office replies"
+          },
+          "peopleCount": {
+            "type": "integer",
+            "description": "Total contacts in campaign"
+          },
+          "peopleFinished": {
+            "type": "integer",
+            "description": "Contacts finished with campaign"
+          },
+          "peopleActive": {
+            "type": "integer",
+            "description": "Active contacts in campaign"
+          },
+          "peoplePaused": {
+            "type": "integer",
+            "description": "Paused contacts in campaign"
+          }
+        }
+      },
+      "Person": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Contact ID"
+          },
+          "email": {
+            "type": "string",
+            "description": "Contact email"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "First name"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name"
+          },
+          "company": {
+            "type": "string",
+            "description": "Company name"
+          },
+          "city": {
+            "type": "string",
+            "description": "City"
+          },
+          "state": {
+            "type": "string",
+            "description": "State"
+          },
+          "country": {
+            "type": "string",
+            "description": "Country"
+          },
+          "timeZoneId": {
+            "type": "string",
+            "description": "Timezone ID"
+          },
+          "title": {
+            "type": "string",
+            "description": "Job title"
+          },
+          "notes": {
+            "type": "string",
+            "description": "Additional notes"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Phone number"
+          },
+          "phoneStatus": {
+            "type": "string",
+            "description": "Phone validation status",
+            "enum": ["valid", "invalid"]
+          },
+          "linkedInProfile": {
+            "type": "string",
+            "description": "LinkedIn profile URL"
+          },
+          "addingDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date when contact was added"
+          },
+          "customFields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Custom fields"
+          }
+        }
+      },
+      "PeopleResponse": {
+        "type": "object",
+        "properties": {
+          "people": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Person"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "description": "Total number of contacts"
+          },
+          "page": {
+            "type": "integer",
+            "description": "Current page number"
+          },
+          "pagesCount": {
+            "type": "integer",
+            "description": "Total number of pages"
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Items per page"
+          },
+          "next": {
+            "type": "string",
+            "description": "URL for next page",
+            "nullable": true
+          },
+          "previous": {
+            "type": "string",
+            "description": "URL for previous page",
+            "nullable": true
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Error code"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message"
+          }
+        },
+        "required": ["error", "message"]
+      },
+      "EmailAccount": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the email account"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email address"
+          },
+          "first_name": {
+            "type": "string",
+            "description": "First name of the account owner"
+          },
+          "last_name": {
+            "type": "string",
+            "description": "Last name of the account owner"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["active", "inactive"],
+            "description": "Current status of the account"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Account creation timestamp"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "apiKeyHeader": {
+        "type": "apiKey",
+        "name": "x-api-key",
+        "in": "header",
+        "description": "API Key for authentication"
+      }
+    }
+  }
+}

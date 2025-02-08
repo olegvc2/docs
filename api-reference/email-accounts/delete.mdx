@@ -1,0 +1,35 @@
+---
+title: 'Delete Email Account'
+openapi: 'DELETE /email-accounts/{id}'
+---
+
+# Delete Email Account
+
+Delete an existing email account.
+
+## API Endpoint
+
+```
+DELETE /email-accounts/{id}
+```
+
+## Path Parameters
+
+| Parameter | Type   | Required | Description           |
+|-----------|--------|----------|-----------------------|
+| id        | string | Yes      | Email account ID      |
+
+## Response
+
+### 204: No Content
+
+Successfully deleted the email account.
+
+### Error Responses
+
+| Status Code | Description           |
+|-------------|-----------------------|
+| 401         | Unauthorized          |
+| 403         | Forbidden             |
+| 404         | Not Found             |
+| 500         | Internal Server Error |

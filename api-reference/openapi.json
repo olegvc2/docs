@@ -1,94 +1,250 @@
 {
-  "openapi": "3.0.1",
+  "openapi": "3.0.0",
   "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
-    "license": {
-      "name": "MIT"
-    },
+    "title": "Reply API Documentation",
+    "description": "Welcome to the Reply.io API guide. Let's get you integrated smoothly!",
     "version": "1.0.0"
   },
   "servers": [
     {
-      "url": "http://sandbox.mintlify.com"
-    }
-  ],
-  "security": [
-    {
-      "bearerAuth": []
+      "url": "https://api.reply.io"
     }
   ],
   "paths": {
-    "/plants": {
+    "/v1/campaigns": {
       "get": {
-        "description": "Returns all plants from the system that the user has access to",
+        "tags": ["Campaigns"],
+        "summary": "Get Campaign Details",
+        "description": "Get campaign details by name or ID",
         "parameters": [
           {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
+              "type": "string"
+            },
+            "description": "Your API Key from settings"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Name of your specified campaign"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID of your specified campaign"
           }
         ],
         "responses": {
           "200": {
-            "description": "Plant response",
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Plant"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "Campaign ID"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Campaign name"
+                    },
+                    "created": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Creation date and time"
+                    },
+                    "status": {
+                      "type": "integer",
+                      "enum": [0, 2, 4],
+                      "description": "Campaign status (0=New, 2=Active, 4=Paused)"
+                    },
+                    "emailAccounts": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Email accounts used for the campaign"
+                    },
+                    "ownerEmail": {
+                      "type": "string",
+                      "description": "Campaign owner's email"
+                    },
+                    "deliveriesCount": {
+                      "type": "integer",
+                      "description": "Number of emails sent"
+                    },
+                    "opensCount": {
+                      "type": "integer",
+                      "description": "Number of emails opened"
+                    },
+                    "repliesCount": {
+                      "type": "integer",
+                      "description": "Number of replies received"
+                    },
+                    "bouncesCount": {
+                      "type": "integer",
+                      "description": "Number of bounced emails"
+                    },
+                    "optOutsCount": {
+                      "type": "integer",
+                      "description": "Number of opt-outs"
+                    },
+                    "outOfOfficeCount": {
+                      "type": "integer",
+                      "description": "Number of out-of-office replies"
+                    },
+                    "peopleCount": {
+                      "type": "integer",
+                      "description": "Total number of contacts"
+                    },
+                    "peopleFinished": {
+                      "type": "integer",
+                      "description": "Number of contacts who finished"
+                    },
+                    "peopleActive": {
+                      "type": "integer",
+                      "description": "Number of active contacts"
+                    },
+                    "peoplePaused": {
+                      "type": "integer",
+                      "description": "Number of paused contacts"
+                    }
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "description": "Bad request - check your input parameters"
+          },
+          "401": {
+            "description": "Unauthorized - invalid API key"
+          },
+          "403": {
+            "description": "Forbidden - insufficient permissions"
+          },
+          "404": {
+            "description": "Not found - campaign doesn't exist"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
-      },
-      "post": {
-        "description": "Creates a new plant in the store",
-        "requestBody": {
-          "description": "Plant to add to the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewPlant"
-              }
-            }
-          },
-          "required": true
-        },
+      }
+    },
+    "/v1/campaignschedules": {
+      "get": {
+        "tags": ["Campaigns"],
+        "summary": "Get List of Campaign Schedules",
+        "description": "Get a list of all campaign schedules",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Your API Key from settings"
+          }
+        ],
         "responses": {
           "200": {
-            "description": "plant response",
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Plant"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "description": "Schedule ID"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Schedule name"
+                      },
+                      "timezoneId": {
+                        "type": "string",
+                        "description": "Timezone ID"
+                      },
+                      "mainTimings": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "weekDay": {
+                              "type": "string",
+                              "description": "Day of the week"
+                            },
+                            "isActive": {
+                              "type": "boolean",
+                              "description": "Whether the schedule is active for this day"
+                            },
+                            "timeRanges": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "fromTime": {
+                                    "type": "object",
+                                    "properties": {
+                                      "hour": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 23
+                                      },
+                                      "minute": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 59
+                                      }
+                                    }
+                                  },
+                                  "toTime": {
+                                    "type": "object",
+                                    "properties": {
+                                      "hour": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 23
+                                      },
+                                      "minute": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 59
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "followUpTimings": {
+                        "type": "array",
+                        "description": "Follow-up timing configurations"
+                      },
+                      "isDefault": {
+                        "type": "boolean",
+                        "description": "Whether this is the default schedule"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -96,32 +252,70 @@
         }
       }
     },
-    "/plants/{id}": {
-      "delete": {
-        "description": "Deletes a single plant based on the ID supplied",
+    "/v1/campaignschedules/default": {
+      "get": {
+        "tags": ["Campaigns"],
+        "summary": "Get List of Default Campaign Schedules",
+        "description": "Get a list of default campaign schedules only",
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "description": "ID of plant to delete",
+            "name": "x-api-key",
+            "in": "header",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+              "type": "string"
+            },
+            "description": "Your API Key from settings"
           }
         ],
         "responses": {
-          "204": {
-            "description": "Plant deleted",
-            "content": {}
-          },
-          "400": {
-            "description": "unexpected error",
+          "200": {
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Schedule"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/campaigns/list": {
+      "get": {
+        "tags": ["Campaigns"],
+        "summary": "Get List of Campaigns",
+        "description": "Get a list of all campaigns",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Your API Key from settings"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "campaigns": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Campaign"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -132,63 +326,158 @@
   },
   "components": {
     "schemas": {
-      "Plant": {
-        "required": [
-          "name"
-        ],
+      "Campaign": {
         "type": "object",
         "properties": {
-          "name": {
-            "description": "The name of the plant",
-            "type": "string"
+          "id": {
+            "type": "integer",
+            "description": "Campaign ID"
           },
-          "tag": {
-            "description": "Tag to specify the type",
-            "type": "string"
+          "name": {
+            "type": "string",
+            "description": "Campaign name"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation date and time"
+          },
+          "status": {
+            "type": "integer",
+            "enum": [0, 2, 4],
+            "description": "Campaign status (0=New, 2=Active, 4=Paused)"
+          },
+          "emailAccounts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Email accounts used for the campaign"
+          },
+          "ownerEmail": {
+            "type": "string",
+            "description": "Campaign owner's email"
+          },
+          "deliveriesCount": {
+            "type": "integer",
+            "description": "Number of emails sent"
+          },
+          "opensCount": {
+            "type": "integer",
+            "description": "Number of emails opened"
+          },
+          "repliesCount": {
+            "type": "integer",
+            "description": "Number of replies received"
+          },
+          "bouncesCount": {
+            "type": "integer",
+            "description": "Number of bounced emails"
+          },
+          "optOutsCount": {
+            "type": "integer",
+            "description": "Number of opt-outs"
+          },
+          "outOfOfficeCount": {
+            "type": "integer",
+            "description": "Number of out-of-office replies"
+          },
+          "peopleCount": {
+            "type": "integer",
+            "description": "Total number of contacts"
+          },
+          "peopleFinished": {
+            "type": "integer",
+            "description": "Number of contacts who finished"
+          },
+          "peopleActive": {
+            "type": "integer",
+            "description": "Number of active contacts"
+          },
+          "peoplePaused": {
+            "type": "integer",
+            "description": "Number of paused contacts"
           }
         }
       },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
+      "Schedule": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Schedule ID"
           },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
+          "name": {
+            "type": "string",
+            "description": "Schedule name"
+          },
+          "timezoneId": {
+            "type": "string",
+            "description": "Timezone ID"
+          },
+          "mainTimings": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "weekDay": {
+                  "type": "string",
+                  "description": "Day of the week"
+                },
+                "isActive": {
+                  "type": "boolean",
+                  "description": "Whether the schedule is active for this day"
+                },
+                "timeRanges": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "fromTime": {
+                        "type": "object",
+                        "properties": {
+                          "hour": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 23
+                          },
+                          "minute": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 59
+                          }
+                        }
+                      },
+                      "toTime": {
+                        "type": "object",
+                        "properties": {
+                          "hour": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 23
+                          },
+                          "minute": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 59
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
               }
             }
-          }
-        ]
-      },
-      "Error": {
-        "required": [
-          "error",
-          "message"
-        ],
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "integer",
-            "format": "int32"
           },
-          "message": {
-            "type": "string"
+          "followUpTimings": {
+            "type": "array",
+            "description": "Follow-up timing configurations"
+          },
+          "isDefault": {
+            "type": "boolean",
+            "description": "Whether this is the default schedule"
           }
         }
-      }
-    },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
       }
     }
   }

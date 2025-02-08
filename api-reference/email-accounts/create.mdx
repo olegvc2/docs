@@ -1,0 +1,58 @@
+---
+title: 'Create Email Account'
+openapi: 'POST /email-accounts'
+---
+
+# Create Email Account
+
+Create a new email account.
+
+## API Endpoint
+
+```
+POST /email-accounts
+```
+
+## Request Body
+
+| Parameter    | Type   | Required | Description                               |
+|-------------|--------|----------|-------------------------------------------|
+| email       | string | Yes      | Email address for the account             |
+| password    | string | Yes      | Password for the email account            |
+| first_name  | string | Yes      | First name of the account owner           |
+| last_name   | string | Yes      | Last name of the account owner            |
+
+```json
+{
+  "email": "user@example.com",
+  "password": "securepassword",
+  "first_name": "John",
+  "last_name": "Doe"
+}
+```
+
+## Response
+
+### 201: Created
+
+```json
+{
+  "data": {
+    "id": "string",
+    "email": "string",
+    "status": "active",
+    "created_at": "string",
+    "updated_at": "string"
+  }
+}
+```
+
+### Error Responses
+
+| Status Code | Description                |
+|------------|----------------------------|
+| 400        | Bad Request                |
+| 401        | Unauthorized               |
+| 403        | Forbidden                  |
+| 409        | Email Already Exists       |
+| 500        | Internal Server Error      |

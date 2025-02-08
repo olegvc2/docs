@@ -1,0 +1,140 @@
+---
+title: 'Get Campaign Details'
+api: 'GET https://api.reply.io/v1/campaigns'
+description: 'Get campaign details by name or ID'
+---
+
+# Get Campaign Details
+
+Get detailed information about a campaign using either its name or ID.
+
+## Query Parameters
+
+<ParamField query="name" type="string">
+  Name of your specified campaign. Must be URL encoded (e.g., 'Campaign One' should be passed as 'Campaign+One')
+</ParamField>
+
+<ParamField query="id" type="integer">
+  ID of your specified campaign
+</ParamField>
+
+Note: You must provide either `name` or `id`, but not both.
+
+## Headers
+
+<ParamField header="x-api-key" type="string" required>
+  Your API Key from settings
+</ParamField>
+
+## Response Body
+
+<ResponseField name="id" type="integer">
+  Campaign ID
+</ResponseField>
+
+<ResponseField name="name" type="string">
+  Campaign name
+</ResponseField>
+
+<ResponseField name="created" type="string" format="date-time">
+  Creation date and time
+</ResponseField>
+
+<ResponseField name="status" type="integer">
+  Campaign status:
+  - 0 = New
+  - 2 = Active
+  - 4 = Paused
+</ResponseField>
+
+<ResponseField name="emailAccounts" type="array">
+  Email accounts used for the campaign
+</ResponseField>
+
+<ResponseField name="ownerEmail" type="string">
+  Campaign owner's email
+</ResponseField>
+
+<ResponseField name="deliveriesCount" type="integer">
+  Number of emails sent
+</ResponseField>
+
+<ResponseField name="opensCount" type="integer">
+  Number of emails opened
+</ResponseField>
+
+<ResponseField name="repliesCount" type="integer">
+  Number of replies received
+</ResponseField>
+
+<ResponseField name="bouncesCount" type="integer">
+  Number of bounced emails
+</ResponseField>
+
+<ResponseField name="optOutsCount" type="integer">
+  Number of opt-outs
+</ResponseField>
+
+<ResponseField name="outOfOfficeCount" type="integer">
+  Number of out-of-office replies
+</ResponseField>
+
+<ResponseField name="peopleCount" type="integer">
+  Total number of contacts
+</ResponseField>
+
+<ResponseField name="peopleFinished" type="integer">
+  Number of contacts who finished
+</ResponseField>
+
+<ResponseField name="peopleActive" type="integer">
+  Number of active contacts
+</ResponseField>
+
+<ResponseField name="peoplePaused" type="integer">
+  Number of paused contacts
+</ResponseField>
+
+## Response Codes
+
+- 200: Successful response
+- 400: Bad request - check your input parameters
+- 401: Unauthorized - invalid API key
+- 403: Forbidden - insufficient permissions
+- 404: Not found - campaign doesn't exist
+- 500: Internal server error
+
+## Example Request
+
+```bash
+# Get by name
+curl -X GET "https://api.reply.io/v1/campaigns?name=My+Campaign" \
+  -H "x-api-key: YOUR_API_KEY"
+
+# Get by ID
+curl -X GET "https://api.reply.io/v1/campaigns?id=51755" \
+  -H "x-api-key: YOUR_API_KEY"
+```
+
+## Example Response
+
+```json
+{
+    "id": 51755,
+    "name": "My Campaign",
+    "created": "2018-03-02T13:54:18.6766885+00:00",
+    "status": 2,
+    "emailAccounts": ["email@reply.io"],
+    "ownerEmail": "owner@reply.io",
+    "deliveriesCount": 5,
+    "opensCount": 1,
+    "repliesCount": 1,
+    "bouncesCount": 0,
+    "optOutsCount": 0,
+    "outOfOfficeCount": 0,
+    "peopleCount": 2,
+    "peopleFinished": 0,
+    "peopleActive": 2,
+    "peoplePaused": 0
+}
+```

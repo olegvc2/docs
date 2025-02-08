@@ -1,0 +1,64 @@
+---
+title: 'Update Email Account'
+openapi: 'PUT /email-accounts/{id}'
+---
+
+# Update Email Account
+
+Update an existing email account.
+
+## API Endpoint
+
+```
+PUT /email-accounts/{id}
+```
+
+## Path Parameters
+
+| Parameter | Type   | Required | Description           |
+|-----------|--------|----------|-----------------------|
+| id        | string | Yes      | Email account ID      |
+
+## Request Body
+
+| Parameter    | Type   | Required | Description                               |
+|-------------|--------|----------|-------------------------------------------|
+| password    | string | No       | New password for the email account        |
+| first_name  | string | No       | Updated first name                        |
+| last_name   | string | No       | Updated last name                         |
+| status      | string | No       | Account status (active/inactive)          |
+
+```json
+{
+  "password": "newpassword",
+  "first_name": "John",
+  "last_name": "Smith",
+  "status": "active"
+}
+```
+
+## Response
+
+### 200: OK
+
+```json
+{
+  "data": {
+    "id": "string",
+    "email": "string",
+    "status": "string",
+    "created_at": "string",
+    "updated_at": "string"
+  }
+}
+```
+
+### Error Responses
+
+| Status Code | Description           |
+|-------------|-----------------------|
+| 400         | Bad Request           |
+| 401         | Unauthorized          |
+| 403         | Forbidden             |
+| 404         | Not Found             |
+| 500         | Internal Server Error |

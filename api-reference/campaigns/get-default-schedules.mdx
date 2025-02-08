@@ -1,0 +1,118 @@
+---
+title: 'Get Default Campaign Schedules'
+api: 'GET https://api.reply.io/v1/campaignschedules/default'
+description: 'Get a list of default campaign schedules'
+---
+
+# Get Default Campaign Schedules
+
+Get a list of default campaign schedules configured in your account.
+
+## Headers
+
+<ParamField header="x-api-key" type="string" required>
+  Your API Key from settings
+</ParamField>
+
+## Response Body
+
+<ResponseField name="Array" type="array">
+  Array of default schedule objects with the following properties:
+
+<Expandable title="Schedule Object">
+  <ResponseField name="id" type="integer">
+    Schedule ID
+  </ResponseField>
+
+  <ResponseField name="name" type="string">
+    Schedule name
+  </ResponseField>
+
+  <ResponseField name="timezoneId" type="string">
+    Timezone ID (e.g., "Eastern Standard Time")
+  </ResponseField>
+
+  <ResponseField name="mainTimings" type="array">
+    Array of timing configurations for each day of the week
+
+    <Expandable title="Main Timing Object">
+      <ResponseField name="weekDay" type="string">
+        Day of the week
+      </ResponseField>
+
+      <ResponseField name="isActive" type="boolean">
+        Whether the schedule is active for this day
+      </ResponseField>
+
+      <ResponseField name="timeRanges" type="array">
+        Array of time ranges for this day
+
+        <Expandable title="Time Range Object">
+          <ResponseField name="fromTime" type="object">
+            Start time
+            <Expandable title="Time Object">
+              <ResponseField name="hour" type="integer">Hour (0-23)</ResponseField>
+              <ResponseField name="minute" type="integer">Minute (0-59)</ResponseField>
+            </Expandable>
+          </ResponseField>
+
+          <ResponseField name="toTime" type="object">
+            End time
+            <Expandable title="Time Object">
+              <ResponseField name="hour" type="integer">Hour (0-23)</ResponseField>
+              <ResponseField name="minute" type="integer">Minute (0-59)</ResponseField>
+            </Expandable>
+          </ResponseField>
+        </Expandable>
+      </ResponseField>
+    </Expandable>
+  </ResponseField>
+
+  <ResponseField name="followUpTimings" type="array">
+    Array of follow-up timing configurations
+  </ResponseField>
+
+  <ResponseField name="isDefault" type="boolean">
+    Whether this is the default schedule (will always be true for this endpoint)
+  </ResponseField>
+</Expandable>
+</ResponseField>
+
+## Example Request
+
+```bash
+curl -X GET "https://api.reply.io/v1/campaignschedules/default" \
+  -H "x-api-key: YOUR_API_KEY"
+```
+
+## Example Response
+
+```json
+[
+    {
+        "id": 281,
+        "name": "Default",
+        "timezoneId": "Eastern Standard Time",
+        "mainTimings": [
+            {
+                "weekDay": "Monday",
+                "isActive": true,
+                "timeRanges": [
+                    {
+                        "fromTime": {
+                            "hour": 9,
+                            "minute": 0
+                        },
+                        "toTime": {
+                            "hour": 17,
+                            "minute": 0
+                        }
+                    }
+                ]
+            }
+        ],
+        "followUpTimings": [],
+        "isDefault": true
+    }
+]
+```

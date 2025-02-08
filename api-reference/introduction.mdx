@@ -1,33 +1,72 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: "Introduction"
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+Welcome to the Reply.io API guide. Let's get you integrated smoothly!
 
-## Welcome
+## API Endpoints
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+Our platform utilizes the endpoint: `api.reply.io` We offer two versions of our API: `V1` and `V2`, each with its unique functionalities. You're free to employ both versions in tandem if desired.
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+## Getting API Key
+
+To gain access to the API:
+
+* Login into your Reply Account
+
+* Navigate to Settings
+
+* Find and copy your API key under API Key section
+
+🔑 **API Key Example:** `AKp2BbuyfS-ugPMkBmd3sg2`
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+To authorize requests, you need to add the following headers to all API requests:
 
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+* `Authorization: x-api-key YOUR_API_KEY`
+
+Here’s an example of a request to the API:
+
 ```
+curl --location 'https://api.reply.io/v1/people' \
+--header 'x-api-key: {{Your_apiKey}}'
+```
+
+## Constructing API Requests:
+
+All your requests will start with either:
+
+* [`https://api.reply.io/v1/`](https://api.reply.io/v1/)
+
+* [`https://api.reply.io/v2/`](https://api.reply.io/v2/)
+
+## Response Codes
+
+* 200 - All good! Request was successful.
+
+* 201 - Success! A new item was created.
+
+* 400 - Uh-oh! There's an issue with your input parameter. Check the response for more information.
+
+* 401 - User not found. This means no users match the API key provided.
+
+* 403 - Access denied. The API key you've provided doesn't have the required permissions for the resource you're trying to access.
+
+* 404 - Resource not found. Double-check your URL or the resource identifier. More details can be found in the response.
+
+* 500 - Our bad! There's an internal server error. We've been notified and will get on it ASAP. Check the response for any extra information
+
+## Rate Limits
+
+To ensure optimal performance and equitable usage for all users, the Reply API has set rate limits:
+
+**Monthly API Calls**
+
+Each Reply user is allowed up to 15,000 API calls every month.
+
+**API Throttling**
+
+There is no general throttling, but certain requests may be subject to throttling, refer to the specific request in this guide for more details.
+
+Please ensure to stay within these limits to avoid any disruptions in service.

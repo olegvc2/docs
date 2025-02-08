@@ -10,45 +10,111 @@
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
-      {
-        "tab": "Guides",
-        "groups": [
-          {
-            "group": "Get Started",
-            "pages": [
-              "introduction",
-              "quickstart",
-              "development"
-            ]
-          },
-          {
-            "group": "Essentials",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
-            ]
-          }
-        ]
-      },
+
       {
         "tab": "API Reference",
         "groups": [
           {
             "group": "API Documentation",
             "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Endpoint Examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete"
+              "api-reference/introduction",
+              {
+                "group": "Reply API v1",
+                "icon": "code",
+                "pages": [
+                  {
+                    "group": "Campaigns",
+                    "icon": "arrow-progress",
+                    "pages": [
+                      "api-reference/campaigns/get-campaign",
+                      "api-reference/campaigns/get-schedules",
+                      "api-reference/campaigns/get-default-schedules",
+                      "api-reference/campaigns/get-list"
+                    ]
+                  },
+                  {
+                    "group": "People",
+                    "icon": "users",
+                    "pages": [
+                      "api-reference/people/get",
+                      "api-reference/people/create",
+                      "api-reference/people/update",
+                      "api-reference/people/delete"
+                    ]
+                  },
+                  {
+                    "group": "Actions",
+                    "icon": "play",
+                    "pages": [
+                      "api-reference/actions/get",
+                      "api-reference/actions/create",
+                      "api-reference/actions/update",
+                      "api-reference/actions/delete"
+                    ]
+                  },
+                  {
+                    "group": "Templates",
+                    "icon": "envelope",
+                    "pages": [
+                      "api-reference/templates/get",
+                      "api-reference/templates/create",
+                      "api-reference/templates/update",
+                      "api-reference/templates/delete"
+                    ]
+                  },
+                  {
+                    "group": "Statistics",
+                    "icon": "chart-simple",
+                    "pages": [
+                      "api-reference/statistics/get",
+                      "api-reference/statistics/create",
+                      "api-reference/statistics/update",
+                      "api-reference/statistics/delete"
+                    ]
+                  },
+                  {
+                    "group": "Domain Blacklisting",
+                    "icon": "link",
+                    "pages": [
+                      "api-reference/domain-blacklisting/get",
+                      "api-reference/domain-blacklisting/create",
+                      "api-reference/domain-blacklisting/update",
+                      "api-reference/domain-blacklisting/delete"
+                    ]
+                  },
+                  {
+                    "group": "Email Accounts",
+                    "icon": "envelope",
+                    "pages": [
+                      "api-reference/email-accounts/get",
+                      "api-reference/email-accounts/create",
+                      "api-reference/email-accounts/update",
+                      "api-reference/email-accounts/delete"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Reply API v2",
+                "icon": "code",
+                "pages": [
+                  "advanced/rest-api/overview",
+                  {
+                    "group": "Updates",
+                    "pages": [
+                      "advanced/rest-api/update/trigger",
+                      "advanced/rest-api/update/status"
+                    ]
+                  },
+                  {
+                    "group": "Chat API",
+                    "pages": [
+                      "advanced/rest-api/chat/create-topic",
+                      "advanced/rest-api/chat/generate-message"
+                    ]
+                  }
+                ]
+              }
             ]
           }
         ]
