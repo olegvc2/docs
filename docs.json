@@ -128,14 +128,14 @@
           "icon": "book-open-cover"
         },
         {
-          "anchor": "Community",
-          "href": "https://reply.io/community/",
-          "icon": "slack"
+          "anchor": "Email API",
+          "href": "https://docs.reply.io/api-reference/campaigns/get-campaign",
+          "icon": "envelope"
         },
         {
-          "anchor": "Blog",
-          "href": "https://reply.io/blog",
-          "icon": "newspaper"
+          "anchor": "LinkedIn API",
+          "href": "https://docs.reply.io/api-reference/email-accounts/get",
+          "icon": "linkedin"
         }
       ]
     }
@@ -148,13 +148,13 @@
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "mailto:support@reply.io"
       }
     ],
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "href": "https://run.reply.io"
     }
   },
   "footer": {
