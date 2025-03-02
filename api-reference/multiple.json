@@ -1,0 +1,80 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "My API",
+    "version": "1.0.0"
+  },
+  "x-tagGroups": [
+    {
+      "name": "Users",
+      "tags": [
+        "Users > Authentication",
+        "Users > Authentication > OAuth",
+        "Users > Authentication > JWT",
+        "Users > Profile"
+      ]
+    },
+    {
+      "name": "Orders",
+      "tags": [
+        "Orders > Management",
+        "Orders > Tracking"
+      ]
+    }
+  ],
+  "tags": [
+    { "name": "Users > Authentication", "description": "Login & Authentication" },
+    { "name": "Users > Authentication > OAuth", "description": "OAuth Authentication" },
+    { "name": "Users > Authentication > JWT", "description": "JWT Authentication" },
+    { "name": "Users > Profile", "description": "User Profile Management" },
+    { "name": "Orders > Management", "description": "Order Processing" },
+    { "name": "Orders > Tracking", "description": "Order Tracking" }
+  ],
+  "paths": {
+    "/login/oauth": {
+      "post": {
+        "tags": ["Users > Authentication > OAuth"],
+        "summary": "OAuth login",
+        "operationId": "loginOAuth",
+        "x-displayName": "OAuth Login",
+        "responses": { "200": { "description": "Successful login" } }
+      }
+    },
+    "/login/jwt": {
+      "post": {
+        "tags": ["Users > Authentication > JWT"],
+        "summary": "JWT login",
+        "operationId": "loginJWT",
+        "x-displayName": "JWT Login",
+        "responses": { "200": { "description": "Successful login" } }
+      }
+    },
+    "/users/profile": {
+      "get": {
+        "tags": ["Users > Profile"],
+        "summary": "Get user profile",
+        "operationId": "getUserProfile",
+        "x-displayName": "Fetch Profile",
+        "responses": { "200": { "description": "User profile details" } }
+      }
+    },
+    "/orders/manage": {
+      "get": {
+        "tags": ["Orders > Management"],
+        "summary": "Manage orders",
+        "operationId": "manageOrders",
+        "x-displayName": "Manage Orders",
+        "responses": { "200": { "description": "Order list" } }
+      }
+    },
+    "/orders/track": {
+      "get": {
+        "tags": ["Orders > Tracking"],
+        "summary": "Track orders",
+        "operationId": "trackOrders",
+        "x-displayName": "Track Orders",
+        "responses": { "200": { "description": "Tracking info" } }
+      }
+    }
+  }
+}

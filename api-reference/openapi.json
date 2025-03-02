@@ -2,248 +2,116 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Reply API Documentation",
-    "description": "Welcome to the Reply.io API guide. Let's get you integrated smoothly!",
-    "version": "1.0.0"
+    "description": "Welcome to the Reply.io API guide. Let's get you integrated smoothly!\n\n# API Endpoint\n\nOur platform utilizes the endpoint: `api.reply.io` We offer two versions of our API: `V1` and `V2`, each with its unique functionalities. You're free to employ both versions in tandem if desired.\n\n# Authentication\n\nTo gain access to the API:\n\n1. Login into your Reply Account\n2. Navigate to `Settings`\n3. Find and copy your API key under `API Key`.\n\n🔑 **API Key Example:** `AKp2BbuyfS-ugPMkBmd3sg2`\n\n# Rate Limits\n\nTo ensure optimal performance and equitable usage for all users, the Reply API has set rate limits:\n\n- **Monthly API Calls**: Each Reply user is allowed up to 15,000 API calls every month.\n- **API Throttling**: There is no general throttling, but certain requests may be subject to throttling, refer to the specific request in this guide for more details.",
+    "version": "3.0.0"
   },
   "servers": [
     {
-      "url": "https://api.reply.io"
+      "url": "https://api.reply.io/v3",
+      "description": "Reply API v1"
+    }
+  ],
+  "security": [
+    {
+      "apiKeyHeader": []
     }
   ],
   "paths": {
-    "/v1/campaigns": {
+    "/sequences": {
       "get": {
-        "tags": ["Campaigns"],
-        "summary": "Get Campaign Details",
-        "description": "Get campaign details by name or ID",
+        "tags": ["Sequences"],
+        "summary": "Get Sequences Details",
+        "description": "This 2 endpoint returns basic campaign details and stats by campaign id\n\n ### Throttling:\n\n  There is a 10-second throttle between requests",
+        "operationId": "getCampaignDetails",
         "parameters": [
-          {
-            "name": "x-api-key",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Your API Key from settings"
-          },
           {
             "name": "name",
             "in": "query",
+            "description": "Name of your specified campaign. Case-sensitive exact match.",
             "schema": {
-              "type": "string"
-            },
-            "description": "Name of your specified campaign"
+              "type": "string",
+              "example": "Summer_Outreach_2025"
+            }
           },
           {
             "name": "id",
             "in": "query",
+            "description": "Unique identifier of your campaign",
             "schema": {
-              "type": "integer"
-            },
-            "description": "ID of your specified campaign"
+              "type": "integer",
+              "format": "int64",
+              "example": 12345
+            }
+          },
+          {
+            "name": "include_stats",
+            "in": "query",
+            "description": "Include detailed campaign statistics in the response",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "date_from",
+            "in": "query",
+            "description": "Filter statistics starting from this date (ISO 8601 format)",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2025-01-01T00:00:00Z"
+            }
+          },
+          {
+            "name": "date_to",
+            "in": "query",
+            "description": "Filter statistics until this date (ISO 8601 format)",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2025-02-01T23:59:59Z"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Campaign details retrieved successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "integer",
-                      "description": "Campaign ID"
-                    },
-                    "name": {
-                      "type": "string",
-                      "description": "Campaign name"
-                    },
-                    "created": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "Creation date and time"
-                    },
-                    "status": {
-                      "type": "integer",
-                      "enum": [0, 2, 4],
-                      "description": "Campaign status (0=New, 2=Active, 4=Paused)"
-                    },
-                    "emailAccounts": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "description": "Email accounts used for the campaign"
-                    },
-                    "ownerEmail": {
-                      "type": "string",
-                      "description": "Campaign owner's email"
-                    },
-                    "deliveriesCount": {
-                      "type": "integer",
-                      "description": "Number of emails sent"
-                    },
-                    "opensCount": {
-                      "type": "integer",
-                      "description": "Number of emails opened"
-                    },
-                    "repliesCount": {
-                      "type": "integer",
-                      "description": "Number of replies received"
-                    },
-                    "bouncesCount": {
-                      "type": "integer",
-                      "description": "Number of bounced emails"
-                    },
-                    "optOutsCount": {
-                      "type": "integer",
-                      "description": "Number of opt-outs"
-                    },
-                    "outOfOfficeCount": {
-                      "type": "integer",
-                      "description": "Number of out-of-office replies"
-                    },
-                    "peopleCount": {
-                      "type": "integer",
-                      "description": "Total number of contacts"
-                    },
-                    "peopleFinished": {
-                      "type": "integer",
-                      "description": "Number of contacts who finished"
-                    },
-                    "peopleActive": {
-                      "type": "integer",
-                      "description": "Number of active contacts"
-                    },
-                    "peoplePaused": {
-                      "type": "integer",
-                      "description": "Number of paused contacts"
-                    }
+                  "$ref": "#/components/schemas/Campaign"
+                },
+                "example": {
+                  "id": 12345,
+                  "name": "Summer_Outreach_2025",
+                  "status": "active",
+                  "created_at": "2025-01-15T08:00:00Z",
+                  "updated_at": "2025-02-09T07:30:00Z",
+                  "statistics": {
+                    "total_prospects": 1000,
+                    "emails_sent": 850,
+                    "emails_opened": 425,
+                    "replies_received": 85,
+                    "bounce_rate": 0.02,
+                    "opt_out_rate": 0.01
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad request - check your input parameters"
-          },
-          "401": {
-            "description": "Unauthorized - invalid API key"
-          },
-          "403": {
-            "description": "Forbidden - insufficient permissions"
-          },
-          "404": {
-            "description": "Not found - campaign doesn't exist"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/v1/campaignschedules": {
-      "get": {
-        "tags": ["Campaigns"],
-        "summary": "Get List of Campaign Schedules",
-        "description": "Get a list of all campaign schedules",
-        "parameters": [
-          {
-            "name": "x-api-key",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Your API Key from settings"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
+            "description": "Bad request - validation error",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "integer",
-                        "description": "Schedule ID"
-                      },
-                      "name": {
-                        "type": "string",
-                        "description": "Schedule name"
-                      },
-                      "timezoneId": {
-                        "type": "string",
-                        "description": "Timezone ID"
-                      },
-                      "mainTimings": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "weekDay": {
-                              "type": "string",
-                              "description": "Day of the week"
-                            },
-                            "isActive": {
-                              "type": "boolean",
-                              "description": "Whether the schedule is active for this day"
-                            },
-                            "timeRanges": {
-                              "type": "array",
-                              "items": {
-                                "type": "object",
-                                "properties": {
-                                  "fromTime": {
-                                    "type": "object",
-                                    "properties": {
-                                      "hour": {
-                                        "type": "integer",
-                                        "minimum": 0,
-                                        "maximum": 23
-                                      },
-                                      "minute": {
-                                        "type": "integer",
-                                        "minimum": 0,
-                                        "maximum": 59
-                                      }
-                                    }
-                                  },
-                                  "toTime": {
-                                    "type": "object",
-                                    "properties": {
-                                      "hour": {
-                                        "type": "integer",
-                                        "minimum": 0,
-                                        "maximum": 23
-                                      },
-                                      "minute": {
-                                        "type": "integer",
-                                        "minimum": 0,
-                                        "maximum": 59
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "followUpTimings": {
-                        "type": "array",
-                        "description": "Follow-up timing configurations"
-                      },
-                      "isDefault": {
-                        "type": "boolean",
-                        "description": "Whether this is the default schedule"
-                      }
-                    }
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": "VALIDATION_ERROR",
+                  "message": "Either campaign name or ID must be provided",
+                  "details": {
+                    "field": "name/id",
+                    "error": "At least one parameter is required"
                   }
                 }
               }
@@ -252,20 +120,29 @@
         }
       }
     },
-    "/v1/campaignschedules/default": {
+    "/people": {
       "get": {
-        "tags": ["Campaigns"],
-        "summary": "Get List of Default Campaign Schedules",
-        "description": "Get a list of default campaign schedules only",
+        "tags": ["People"],
+        "summary": "Get List of Contacts",
+        "description": "Returns a paginated list of contacts",
         "parameters": [
           {
-            "name": "x-api-key",
-            "in": "header",
-            "required": true,
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
             "schema": {
-              "type": "string"
-            },
-            "description": "Your API Key from settings"
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of items per page",
+            "schema": {
+              "type": "integer",
+              "default": 100
+            }
           }
         ],
         "responses": {
@@ -274,10 +151,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Schedule"
-                  }
+                  "$ref": "#/components/schemas/PeopleResponse"
                 }
               }
             }
@@ -285,42 +159,211 @@
         }
       }
     },
-    "/v1/campaigns/list": {
+    "/email-accounts": {
       "get": {
-        "tags": ["Campaigns"],
-        "summary": "Get List of Campaigns",
-        "description": "Get a list of all campaigns",
+        "summary": "Get Email Accounts",
+        "description": "Retrieve a list of email accounts associated with your account.",
+        "operationId": "getEmailAccounts",
         "parameters": [
           {
-            "name": "x-api-key",
-            "in": "header",
-            "required": true,
+            "name": "page",
+            "in": "query",
+            "description": "Page number for pagination",
+            "required": false,
             "schema": {
-              "type": "string"
-            },
-            "description": "Your API Key from settings"
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of items per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filter by account status",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["active", "inactive"]
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "List of email accounts",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "campaigns": {
+                    "accounts": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/Campaign"
+                        "$ref": "#/components/schemas/EmailAccount"
                       }
+                    },
+                    "total": {
+                      "type": "integer",
+                      "description": "Total number of accounts"
+                    },
+                    "page": {
+                      "type": "integer",
+                      "description": "Current page number"
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "description": "Number of items per page"
                     }
                   }
                 }
               }
             }
           }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create Email Account",
+        "description": "Create a new email account.",
+        "operationId": "createEmailAccount",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "password", "first_name", "last_name"],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "Email address for the account"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password for the email account"
+                  },
+                  "first_name": {
+                    "type": "string",
+                    "description": "First name of the account owner"
+                  },
+                  "last_name": {
+                    "type": "string",
+                    "description": "Last name of the account owner"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Email account created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailAccount"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/email-accounts/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "Email account ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
         }
+      ],
+      "put": {
+        "summary": "Update Email Account",
+        "description": "Update an existing email account.",
+        "operationId": "updateEmailAccount",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string",
+                    "description": "New password for the email account"
+                  },
+                  "first_name": {
+                    "type": "string",
+                    "description": "Updated first name"
+                  },
+                  "last_name": {
+                    "type": "string",
+                    "description": "Updated last name"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": ["active", "inactive"],
+                    "description": "Account status"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Email account updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailAccount"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete Email Account",
+        "description": "Delete an existing email account.",
+        "operationId": "deleteEmailAccount",
+        "responses": {
+          "204": {
+            "description": "Email account deleted successfully"
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
       }
     }
   },
@@ -328,156 +371,345 @@
     "schemas": {
       "Campaign": {
         "type": "object",
+        "required": ["id", "name", "status", "created_at"],
         "properties": {
           "id": {
             "type": "integer",
-            "description": "Campaign ID"
+            "format": "int64",
+            "description": "Unique identifier of the campaign",
+            "example": 12345
           },
           "name": {
             "type": "string",
-            "description": "Campaign name"
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Creation date and time"
+            "description": "Name of the campaign",
+            "example": "Summer_Outreach_2025",
+            "minLength": 1,
+            "maxLength": 100
           },
           "status": {
-            "type": "integer",
-            "enum": [0, 2, 4],
-            "description": "Campaign status (0=New, 2=Active, 4=Paused)"
-          },
-          "emailAccounts": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "Email accounts used for the campaign"
-          },
-          "ownerEmail": {
             "type": "string",
-            "description": "Campaign owner's email"
+            "description": "Current status of the campaign",
+            "enum": ["draft", "active", "paused", "completed", "archived"],
+            "example": "active"
           },
-          "deliveriesCount": {
-            "type": "integer",
-            "description": "Number of emails sent"
-          },
-          "opensCount": {
-            "type": "integer",
-            "description": "Number of emails opened"
-          },
-          "repliesCount": {
-            "type": "integer",
-            "description": "Number of replies received"
-          },
-          "bouncesCount": {
-            "type": "integer",
-            "description": "Number of bounced emails"
-          },
-          "optOutsCount": {
-            "type": "integer",
-            "description": "Number of opt-outs"
-          },
-          "outOfOfficeCount": {
-            "type": "integer",
-            "description": "Number of out-of-office replies"
-          },
-          "peopleCount": {
-            "type": "integer",
-            "description": "Total number of contacts"
-          },
-          "peopleFinished": {
-            "type": "integer",
-            "description": "Number of contacts who finished"
-          },
-          "peopleActive": {
-            "type": "integer",
-            "description": "Number of active contacts"
-          },
-          "peoplePaused": {
-            "type": "integer",
-            "description": "Number of paused contacts"
-          }
-        }
-      },
-      "Schedule": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "description": "Schedule ID"
-          },
-          "name": {
+          "created_at": {
             "type": "string",
-            "description": "Schedule name"
+            "format": "date-time",
+            "description": "Timestamp when the campaign was created"
           },
-          "timezoneId": {
+          "updated_at": {
             "type": "string",
-            "description": "Timezone ID"
+            "format": "date-time",
+            "description": "Timestamp of the last campaign update"
           },
-          "mainTimings": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "weekDay": {
-                  "type": "string",
-                  "description": "Day of the week"
-                },
-                "isActive": {
-                  "type": "boolean",
-                  "description": "Whether the schedule is active for this day"
-                },
-                "timeRanges": {
-                  "type": "array",
-                  "items": {
+          "owner": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "description": "ID of the campaign owner"
+              },
+              "email": {
+                "type": "string",
+                "format": "email",
+                "description": "Email of the campaign owner"
+              },
+              "name": {
+                "type": "string",
+                "description": "Name of the campaign owner"
+              }
+            }
+          },
+          "settings": {
+            "type": "object",
+            "properties": {
+              "sending_schedule": {
+                "type": "object",
+                "properties": {
+                  "timezone": {
+                    "type": "string",
+                    "description": "Timezone for campaign scheduling",
+                    "example": "America/New_York"
+                  },
+                  "working_hours": {
                     "type": "object",
                     "properties": {
-                      "fromTime": {
-                        "type": "object",
-                        "properties": {
-                          "hour": {
-                            "type": "integer",
-                            "minimum": 0,
-                            "maximum": 23
-                          },
-                          "minute": {
-                            "type": "integer",
-                            "minimum": 0,
-                            "maximum": 59
-                          }
-                        }
+                      "start": {
+                        "type": "string",
+                        "format": "time",
+                        "example": "09:00"
                       },
-                      "toTime": {
-                        "type": "object",
-                        "properties": {
-                          "hour": {
-                            "type": "integer",
-                            "minimum": 0,
-                            "maximum": 23
-                          },
-                          "minute": {
-                            "type": "integer",
-                            "minimum": 0,
-                            "maximum": 59
-                          }
-                        }
+                      "end": {
+                        "type": "string",
+                        "format": "time",
+                        "example": "17:00"
                       }
                     }
+                  },
+                  "working_days": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+                    }
+                  }
+                }
+              },
+              "tracking": {
+                "type": "object",
+                "properties": {
+                  "open_tracking": {
+                    "type": "boolean",
+                    "description": "Track email opens"
+                  },
+                  "click_tracking": {
+                    "type": "boolean",
+                    "description": "Track link clicks"
+                  },
+                  "reply_tracking": {
+                    "type": "boolean",
+                    "description": "Track email replies"
                   }
                 }
               }
             }
           },
-          "followUpTimings": {
-            "type": "array",
-            "description": "Follow-up timing configurations"
-          },
-          "isDefault": {
-            "type": "boolean",
-            "description": "Whether this is the default schedule"
+          "statistics": {
+            "type": "object",
+            "description": "Campaign performance metrics",
+            "properties": {
+              "total_prospects": {
+                "type": "integer",
+                "description": "Total number of prospects in the campaign"
+              },
+              "emails_sent": {
+                "type": "integer",
+                "description": "Number of emails sent"
+              },
+              "emails_opened": {
+                "type": "integer",
+                "description": "Number of emails opened"
+              },
+              "replies_received": {
+                "type": "integer",
+                "description": "Number of replies received"
+              },
+              "bounce_rate": {
+                "type": "number",
+                "format": "float",
+                "description": "Email bounce rate",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "opt_out_rate": {
+                "type": "number",
+                "format": "float",
+                "description": "Opt-out rate",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "performance_metrics": {
+                "type": "object",
+                "properties": {
+                  "open_rate": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Email open rate"
+                  },
+                  "click_rate": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Link click rate"
+                  },
+                  "reply_rate": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Reply rate"
+                  }
+                }
+              }
+            }
           }
         }
+      },
+      "Person": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Contact ID"
+          },
+          "email": {
+            "type": "string",
+            "description": "Contact email"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "First name"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name"
+          },
+          "company": {
+            "type": "string",
+            "description": "Company name"
+          },
+          "city": {
+            "type": "string",
+            "description": "City"
+          },
+          "state": {
+            "type": "string",
+            "description": "State"
+          },
+          "country": {
+            "type": "string",
+            "description": "Country"
+          },
+          "timeZoneId": {
+            "type": "string",
+            "description": "Timezone ID"
+          },
+          "title": {
+            "type": "string",
+            "description": "Job title"
+          },
+          "notes": {
+            "type": "string",
+            "description": "Additional notes"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Phone number"
+          },
+          "phoneStatus": {
+            "type": "string",
+            "description": "Phone validation status",
+            "enum": ["valid", "invalid"]
+          },
+          "linkedInProfile": {
+            "type": "string",
+            "description": "LinkedIn profile URL"
+          },
+          "addingDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date when contact was added"
+          },
+          "customFields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Custom fields"
+          }
+        }
+      },
+      "PeopleResponse": {
+        "type": "object",
+        "properties": {
+          "people": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Person"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "description": "Total number of contacts"
+          },
+          "page": {
+            "type": "integer",
+            "description": "Current page number"
+          },
+          "pagesCount": {
+            "type": "integer",
+            "description": "Total number of pages"
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Items per page"
+          },
+          "next": {
+            "type": "string",
+            "description": "URL for next page",
+            "nullable": true
+          },
+          "previous": {
+            "type": "string",
+            "description": "URL for previous page",
+            "nullable": true
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Error code"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message"
+          }
+        },
+        "required": ["error", "message"]
+      },
+      "EmailAccount": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the email account"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email address"
+          },
+          "first_name": {
+            "type": "string",
+            "description": "First name of the account owner"
+          },
+          "last_name": {
+            "type": "string",
+            "description": "Last name of the account owner"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["active", "inactive"],
+            "description": "Current status of the account"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Account creation timestamp"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "apiKeyHeader": {
+        "type": "apiKey",
+        "name": "x-api-key",
+        "in": "header",
+        "description": "API Key for authentication"
       }
     }
   }

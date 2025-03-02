@@ -8,7 +8,6 @@
     "dark": "#15803D"
   },
   "favicon": "/favicon.svg",
-  "api": { "openapi": "./api.json" },
   "navigation": {
     "versions": [
       {
@@ -17,18 +16,20 @@
       {
         "tab": "API Reference",
         "groups": [
-          
           {
-            "group": "API Documentation",
-            "openapi": {
-            "source": "/api-reference/api.json"
-            }
-          },
-          {
-            "group": "Schemas",
+            "group": "Sequences",
             "pages": [
               "api-reference/sequences/sequences"
             ]
+          },
+          {
+            "group": "API Documentation",
+            "pages": [
+              "api-reference/sequences/sequences"
+            ],
+            "openapi": {
+            "source": "/api-reference/api.json"
+            }
           }
         ]
       }

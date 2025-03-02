@@ -1,0 +1,121 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Powerful RESTful API",
+    "version": "1.0.0",
+    "description": "A powerful RESTful API providing multiple actions per entity with clear and intuitive endpoints, grouped by functionality."
+  },
+  "servers": [
+    {
+      "url": "https://api.example.com/v1",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/management/entities": {
+      "get": {
+        "summary": "List all entities",
+        "responses": {
+          "200": { "description": "Entities retrieved successfully" }
+        },
+        "tags": ["Entities Management"]
+      },
+      "post": {
+        "summary": "Create a new entity",
+        "responses": {
+          "201": { "description": "Entity created successfully" }
+        },
+        "tags": ["Entities Management"]
+      }
+    },
+    "/management/entities/{entityId}": {
+      "parameters": [
+        {
+          "name": "entityId",
+          "in": "path",
+          "required": true,
+          "schema": { "type": "string" }
+        }
+      ],
+      "get": {
+        "summary": "Get entity details",
+        "responses": {
+          "200": { "description": "Entity details retrieved successfully" },
+          "404": { "description": "Entity not found" }
+        },
+        "tags": ["Entities Management"]
+      },
+      "put": {
+        "summary": "Update entity",
+        "responses": {
+          "200": { "description": "Entity updated successfully" }
+        },
+        "tags": ["Entities Management"]
+      },
+      "delete": {
+        "summary": "Delete entity",
+        "responses": {
+          "204": { "description": "Entity deleted successfully" }
+        },
+        "tags": ["Entities Management"]
+      }
+    },
+    "/actions/entities/{entityId}/start": {
+      "post": {
+        "summary": "Start entity",
+        "responses": {
+          "200": { "description": "Entity started successfully" },
+          "409": { "description": "Entity already started" }
+        },
+        "tags": ["Entity Actions"]
+      }
+    },
+    "/actions/entities/{entityId}/stop": {
+      "post": {
+        "summary": "Stop entity",
+        "responses": {
+          "200": { "description": "Entity stopped successfully" },
+          "409": { "description": "Entity already stopped" }
+        },
+        "tags": ["Entity Actions"]
+      }
+    },
+    "/actions/entities/{entityId}/restart": {
+      "post": {
+        "summary": "Restart entity",
+        "responses": {
+          "200": { "description": "Entity restarted successfully" }
+        },
+        "tags": ["Entity Actions"]
+      }
+    },
+    "/monitoring/entities/{entityId}/status": {
+      "get": {
+        "summary": "Get entity status",
+        "responses": {
+          "200": { "description": "Status retrieved successfully" }
+        },
+        "tags": ["Entity Monitoring"]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Entity": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "status": { "type": "string", "enum": ["running", "stopped", "paused"] },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "updatedAt": { "type": "string", "format": "date-time" }
+        },
+        "required": ["id", "name", "status"]
+      }
+    },
+    "responses": {
+      "NotFound": { "description": "The requested resource was not found." },
+      "Conflict": { "description": "The request could not be completed due to a conflict." }
+    }
+  }
+}

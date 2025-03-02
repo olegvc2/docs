@@ -1,0 +1,170 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Mint Starter Kit",
+  "colors": {
+    "primary": "#16A34A",
+    "light": "#07C983",
+    "dark": "#15803D"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "versions": [
+      {
+        "version": "3.0",
+        "tabs": [
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "API Documentation",
+            "pages": [
+              "api-reference/introduction",
+              {
+                "group": "Sequences",
+                "icon": "arrow-progress",
+                "pages": [
+                  "api-reference/sequences/sequences",
+                  "api-reference/sequences/update-sequence",
+                  {
+                    "group": "Sequence Actions",
+                    "pages": [
+                      
+                      "api-reference/sequences/start-sequence",
+                      "api-reference/sequences/pause-sequence",
+                      "api-reference/sequences/archive-sequence"
+                    ]
+                  },
+                  {
+                    "group": "Sequence Steps",
+                    "pages": [
+                      "api-reference/sequences/sequence-steps/get-steps",
+                      "api-reference/sequences/sequence-steps/add-step",
+                      "api-reference/sequences/sequence-steps/update-step"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Campaigns",
+                "icon": "arrow-progress",
+                "pages": [
+                  "api-reference/campaigns/campaigns",
+                  "api-reference/campaigns/get-campaign",
+                  "api-reference/campaigns/get-schedules",
+                  "api-reference/campaigns/get-default-schedules",
+                  "api-reference/campaigns/get-list"
+                ]
+              },
+              {
+                "group": "People",
+                "icon": "users",
+                "pages": [
+                  "api-reference/people/get",
+                  "api-reference/people/create",
+                  "api-reference/people/update",
+                  "api-reference/people/delete"
+                ]
+              },
+              {
+                "group": "Actions",
+                "icon": "play",
+                "pages": [
+                  "api-reference/actions/get",
+                  "api-reference/actions/create",
+                  "api-reference/actions/update",
+                  "api-reference/actions/delete"
+                ]
+              },
+              {
+                "group": "Templates",
+                "icon": "envelope",
+                "pages": [
+                  "api-reference/templates/get",
+                  "api-reference/templates/create",
+                  "api-reference/templates/update",
+                  "api-reference/templates/delete"
+                ]
+              },
+              {
+                "group": "Statistics",
+                "icon": "chart-simple",
+                "pages": [
+                  "api-reference/statistics/get",
+                  "api-reference/statistics/create",
+                  "api-reference/statistics/update",
+                  "api-reference/statistics/delete"
+                ]
+              },
+              {
+                "group": "Domain Blacklisting",
+                "icon": "link",
+                "pages": [
+                  "api-reference/domain-blacklisting/get",
+                  "api-reference/domain-blacklisting/create",
+                  "api-reference/domain-blacklisting/update",
+                  "api-reference/domain-blacklisting/delete"
+                ]
+              },
+              {
+                "group": "Email Accounts",
+                "icon": "envelope",
+                "pages": [
+                  "api-reference/email-accounts/get",
+                  "api-reference/email-accounts/create",
+                  "api-reference/email-accounts/update",
+                  "api-reference/email-accounts/delete"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+      }
+    ],
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Documentation",
+          "href": "https://docs.reply.io",
+          "icon": "book-open-cover"
+        },
+        {
+          "anchor": "Email API",
+          "href": "https://docs.reply.io/api-reference/campaigns/get-campaign",
+          "icon": "envelope"
+        },
+        {
+          "anchor": "LinkedIn API",
+          "href": "https://docs.reply.io/api-reference/email-accounts/get",
+          "icon": "linkedin"
+        }
+      ]
+    }
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "mailto:support@reply.io"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Dashboard",
+      "href": "https://run.reply.io"
+    }
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/mintlify",
+      "github": "https://github.com/mintlify",
+      "linkedin": "https://linkedin.com/company/mintlify"
+    }
+  }
+}

@@ -1,0 +1,482 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "version": "1.0",
+    "title": "Reply API"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/sequences": {
+      "get": {
+        "tags": [
+          "Sequences"
+        ],
+        "summary": "Get all sequences",
+        "operationId": "get-sequences",
+        "responses": {},
+        "servers": [
+          {
+            "url": "http://localhost:3000"
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Sequences"
+        ],
+        "summary": "Create a sequence",
+        "operationId": "post-sequences",
+        "responses": {},
+        "servers": [
+          {
+            "url": "http://localhost:3000"
+          }
+        ]
+      }
+    },
+    "/sequences/{id}": {
+      "get": {
+        "tags": [
+          "Sequences"
+        ],
+        "summary": "Get a sequence",
+        "description": "Returns basic sequence details and stats by sequence id\n\nSchema: [Sequence](https://replyteam.stoplight.io/docs/reply/branches/main/d601a1d03069c-sequence)",
+        "operationId": "get-sequences-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Default",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Sequence"
+                }
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:3000"
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Sequences"
+        ],
+        "summary": "Update a sequence",
+        "description": "Update sequence settings",
+        "operationId": "patch-sequences-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Default",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Sequence"
+                }
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:3000"
+          }
+        ]
+      }
+    },
+    "/sequences/{id}/start": {
+      "post": {
+        "tags": [
+          "Sequence Actions"
+        ],
+        "summary": "Start a sequence",
+        "description": "Start a sequence by id",
+        "operationId": "post-sequences-id-start",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {},
+        "servers": [
+          {
+            "url": "http://localhost:3000"
+          }
+        ]
+      }
+    },
+    "/sequences/{id}/pause": {
+      "post": {
+        "tags": [
+          "Sequence Actions"
+        ],
+        "summary": "Pause a sequence",
+        "description": " Pause running sequence by id",
+        "operationId": "post-sequences-id-pause",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {},
+        "servers": [
+          {
+            "url": "http://localhost:3000"
+          }
+        ]
+      }
+    },
+    "/sequences/{id}/archive": {
+      "post": {
+        "tags": [
+          "Sequence Actions"
+        ],
+        "summary": "Archive a sequence",
+        "description": "Archive a sequence by id",
+        "operationId": "post-sequences-id-archive",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {},
+        "servers": [
+          {
+            "url": "http://localhost:3000"
+          }
+        ]
+      }
+    },
+    "/sequences/{id}/steps": {
+      "get": {
+        "tags": [
+          "Sequence Steps"
+        ],
+        "summary": "Get all sequence steps",
+        "description": "Get all steps in a sequence",
+        "operationId": "get-sequences-id-steps",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {},
+        "servers": [
+          {
+            "url": "http://localhost:3000"
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Sequence Steps"
+        ],
+        "summary": "Add a sequence step",
+        "description": "Add a new step to a sequence",
+        "operationId": "post-sequences-id-steps",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {},
+        "servers": [
+          {
+            "url": "http://localhost:3000"
+          }
+        ]
+      }
+    },
+    "/sequences/{id}/steps/{stepId}": {
+      "get": {
+        "tags": [
+          "Sequence Steps"
+        ],
+        "summary": "Get a sequence step",
+        "description": "Get step details by ID",
+        "operationId": "get-sequences-id-steps-stepId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "stepId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {},
+        "servers": [
+          {
+            "url": "http://localhost:3000"
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Sequence Steps"
+        ],
+        "summary": "Update a sequence step",
+        "description": "Update step details",
+        "operationId": "patch-sequences-id-steps-stepId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "stepId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {},
+        "servers": [
+          {
+            "url": "http://localhost:3000"
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Sequence Steps"
+        ],
+        "summary": "Delete a sequence step",
+        "description": "Delete a step from a sequence",
+        "operationId": "delete-sequences-id-steps-stepId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "stepId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {},
+        "servers": [
+          {
+            "url": "http://localhost:3000"
+          }
+        ]
+      }
+    },
+    "/schedules": {
+      "get": {
+        "tags": [
+          "Schedules"
+        ],
+        "summary": "Get all schedules",
+        "operationId": "get-schedules",
+        "responses": {},
+        "servers": [
+          {
+            "url": "http://localhost:3000"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Sequence": {
+        "type": "object",
+        "title": "Sequence",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/Sequence-Status",
+            "description": "0 = New\n2 = Active\n4 = Paused"
+          },
+          "emailAccounts": {
+            "type": "array",
+            "description": "Specifies one or more email accounts that will be used to send emails for this campaign.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "ownerEmail": {
+            "type": "string",
+            "description": "Represents the email of the campaign's owner."
+          },
+          "deliveriesCount": {
+            "type": "integer"
+          },
+          "opensCount": {
+            "type": "integer"
+          },
+          "repliesCount": {
+            "type": "integer"
+          },
+          "bouncesCount": {
+            "type": "integer"
+          },
+          "optOutsCount": {
+            "type": "integer"
+          },
+          "outOfOfficeCount": {
+            "type": "integer"
+          },
+          "peopleCount": {
+            "type": "integer"
+          },
+          "peopleFinished": {
+            "type": "integer"
+          },
+          "peopleActive": {
+            "type": "integer"
+          },
+          "peoplePaused": {
+            "type": "integer"
+          }
+        },
+        "examples": [
+          {
+            "id": 51755,
+            "name": "Tony_Campaign",
+            "created": "2018-03-02T13:54:18.6766885+00:00",
+            "status": 2,
+            "emailAccounts": [
+              "demoEmail@reply.io"
+            ],
+            "ownerEmail": "Tony@robsims.space",
+            "deliveriesCount": 5,
+            "opensCount": 1,
+            "repliesCount": 1,
+            "bouncesCount": 0,
+            "optOutsCount": 0,
+            "outOfOfficeCount": 0,
+            "peopleCount": 2,
+            "peopleFinished": 0,
+            "peopleActive": 2,
+            "peoplePaused": 0
+          }
+        ],
+        "x-examples": {
+          "Example 1": {
+            "id": 51755,
+            "name": "Tony_Campaign",
+            "created": "2018-03-02T13:54:18.6766885+00:00",
+            "status": 2,
+            "emailAccounts": [
+              "demoEmail@reply.io"
+            ],
+            "ownerEmail": "Tony@robsims.space",
+            "deliveriesCount": 5,
+            "opensCount": 1,
+            "repliesCount": 1,
+            "bouncesCount": 0,
+            "optOutsCount": 0,
+            "outOfOfficeCount": 0,
+            "peopleCount": 2,
+            "peopleFinished": 0,
+            "peopleActive": 2,
+            "peoplePaused": 0
+          }
+        },
+        "x-extension-1": null
+      },
+      "Sequence-Status": {
+        "type": "integer",
+        "enum": [
+          0,
+          2,
+          4
+        ],
+        "title": "Sequence-Status",
+        "x-examples": {
+          "Example 1": {
+            "campaign_status": {
+              "0": "New",
+              "2": "Active",
+              "4": "Paused"
+            }
+          }
+        }
+      }
+    }
+  }
+}

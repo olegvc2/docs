@@ -8,31 +8,22 @@
     "dark": "#15803D"
   },
   "favicon": "/favicon.svg",
-  "api": { "openapi": "./api.json" },
   "navigation": {
-    "versions": [
+    "languages": ["en", "fr"],
+    "versions": ["v1", "v2"],
+    "tabs": [
       {
-        "version": "3.0",
-        "tabs": [
-      {
-        "tab": "API Reference",
-        "groups": [
-          
-          {
-            "group": "API Documentation",
-            "openapi": {
-            "source": "/api-reference/api.json"
-            }
-          },
-          {
-            "group": "Schemas",
-            "pages": [
-              "api-reference/sequences/sequences"
-            ]
-          }
-        ]
-      }
-    ]
+        "name": "API Documentation",
+        "url": "api-reference", 
+        "openapi": "api-reference/api.json",
+        "tab": "API Documentation",
+        "href": "/api-reference",
+        "languages": ["en"],
+        "versions": ["v1"],
+        "dropdowns": [],
+        "anchors": [],
+        "groups": [],
+        "pages": []
       }
     ],
     "global": {
@@ -53,7 +44,11 @@
           "icon": "linkedin"
         }
       ]
-    }
+    },
+    "dropdowns": [],
+    "anchors": [],
+    "groups": [],
+    "pages": []
   },
   "logo": {
     "light": "/logo/light.svg",

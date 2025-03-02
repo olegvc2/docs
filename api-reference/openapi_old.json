@@ -25,57 +25,101 @@
       "get": {
         "tags": ["Campaigns"],
         "summary": "Get Campaign Details",
-        "description": "Returns basic campaign details and stats by campaign name or ID",
+        "description": "2 This endpoint returns basic campaign details and stats by campaign id\n\n ### Throttling:\n\n  There is a 10-second throttle between requests",
+        "operationId": "getCampaignDetails",
         "parameters": [
           {
             "name": "name",
             "in": "query",
-            "description": "Name of your specified campaign",
+            "description": "Name of your specified campaign. Case-sensitive exact match.",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "Summer_Outreach_2025"
             }
           },
           {
             "name": "id",
             "in": "query",
-            "description": "ID of your specified campaign",
+            "description": "Unique identifier of your campaign",
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "format": "int64",
+              "example": 12345
+            }
+          },
+          {
+            "name": "include_stats",
+            "in": "query",
+            "description": "Include detailed campaign statistics in the response",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "date_from",
+            "in": "query",
+            "description": "Filter statistics starting from this date (ISO 8601 format)",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2025-01-01T00:00:00Z"
+            }
+          },
+          {
+            "name": "date_to",
+            "in": "query",
+            "description": "Filter statistics until this date (ISO 8601 format)",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2025-02-01T23:59:59Z"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Campaign details retrieved successfully",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Campaign"
+                },
+                "example": {
+                  "id": 12345,
+                  "name": "Summer_Outreach_2025",
+                  "status": "active",
+                  "created_at": "2025-01-15T08:00:00Z",
+                  "updated_at": "2025-02-09T07:30:00Z",
+                  "statistics": {
+                    "total_prospects": 1000,
+                    "emails_sent": 850,
+                    "emails_opened": 425,
+                    "replies_received": 85,
+                    "bounce_rate": 0.02,
+                    "opt_out_rate": 0.01
+                  }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad request - check input parameters",
+            "description": "Bad request - validation error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": "VALIDATION_ERROR",
+                  "message": "Either campaign name or ID must be provided",
+                  "details": {
+                    "field": "name/id",
+                    "error": "At least one parameter is required"
+                  }
                 }
               }
             }
-          },
-          "401": {
-            "description": "User not found"
-          },
-          "403": {
-            "description": "Access denied"
-          },
-          "404": {
-            "description": "Resource not found"
-          },
-          "500": {
-            "description": "Internal server error"
           }
         }
       }
@@ -331,75 +375,164 @@
     "schemas": {
       "Campaign": {
         "type": "object",
+        "required": ["id", "name", "status", "created_at"],
         "properties": {
           "id": {
             "type": "integer",
-            "description": "Campaign ID"
+            "format": "int64",
+            "description": "Unique identifier of the campaign",
+            "example": 12345
           },
           "name": {
             "type": "string",
-            "description": "Campaign name"
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Creation date and time"
+            "description": "Name of the campaign",
+            "example": "Summer_Outreach_2025",
+            "minLength": 1,
+            "maxLength": 100
           },
           "status": {
-            "type": "integer",
-            "description": "Campaign status (0 = New, 2 = Active, 4 = Paused)",
-            "enum": [0, 2, 4]
-          },
-          "emailAccounts": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "Email accounts used for the campaign"
-          },
-          "ownerEmail": {
             "type": "string",
-            "description": "Campaign owner's email"
+            "description": "Current status of the campaign",
+            "enum": ["draft", "active", "paused", "completed", "archived"],
+            "example": "active"
           },
-          "deliveriesCount": {
-            "type": "integer",
-            "description": "Total emails sent"
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp when the campaign was created"
           },
-          "opensCount": {
-            "type": "integer",
-            "description": "Number of opened emails"
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp of the last campaign update"
           },
-          "repliesCount": {
-            "type": "integer",
-            "description": "Number of replies received"
+          "owner": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "description": "ID of the campaign owner"
+              },
+              "email": {
+                "type": "string",
+                "format": "email",
+                "description": "Email of the campaign owner"
+              },
+              "name": {
+                "type": "string",
+                "description": "Name of the campaign owner"
+              }
+            }
           },
-          "bouncesCount": {
-            "type": "integer",
-            "description": "Number of bounced emails"
+          "settings": {
+            "type": "object",
+            "properties": {
+              "sending_schedule": {
+                "type": "object",
+                "properties": {
+                  "timezone": {
+                    "type": "string",
+                    "description": "Timezone for campaign scheduling",
+                    "example": "America/New_York"
+                  },
+                  "working_hours": {
+                    "type": "object",
+                    "properties": {
+                      "start": {
+                        "type": "string",
+                        "format": "time",
+                        "example": "09:00"
+                      },
+                      "end": {
+                        "type": "string",
+                        "format": "time",
+                        "example": "17:00"
+                      }
+                    }
+                  },
+                  "working_days": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+                    }
+                  }
+                }
+              },
+              "tracking": {
+                "type": "object",
+                "properties": {
+                  "open_tracking": {
+                    "type": "boolean",
+                    "description": "Track email opens"
+                  },
+                  "click_tracking": {
+                    "type": "boolean",
+                    "description": "Track link clicks"
+                  },
+                  "reply_tracking": {
+                    "type": "boolean",
+                    "description": "Track email replies"
+                  }
+                }
+              }
+            }
           },
-          "optOutsCount": {
-            "type": "integer",
-            "description": "Number of opt-outs"
-          },
-          "outOfOfficeCount": {
-            "type": "integer",
-            "description": "Number of out-of-office replies"
-          },
-          "peopleCount": {
-            "type": "integer",
-            "description": "Total contacts in campaign"
-          },
-          "peopleFinished": {
-            "type": "integer",
-            "description": "Contacts finished with campaign"
-          },
-          "peopleActive": {
-            "type": "integer",
-            "description": "Active contacts in campaign"
-          },
-          "peoplePaused": {
-            "type": "integer",
-            "description": "Paused contacts in campaign"
+          "statistics": {
+            "type": "object",
+            "description": "Campaign performance metrics",
+            "properties": {
+              "total_prospects": {
+                "type": "integer",
+                "description": "Total number of prospects in the campaign"
+              },
+              "emails_sent": {
+                "type": "integer",
+                "description": "Number of emails sent"
+              },
+              "emails_opened": {
+                "type": "integer",
+                "description": "Number of emails opened"
+              },
+              "replies_received": {
+                "type": "integer",
+                "description": "Number of replies received"
+              },
+              "bounce_rate": {
+                "type": "number",
+                "format": "float",
+                "description": "Email bounce rate",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "opt_out_rate": {
+                "type": "number",
+                "format": "float",
+                "description": "Opt-out rate",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "performance_metrics": {
+                "type": "object",
+                "properties": {
+                  "open_rate": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Email open rate"
+                  },
+                  "click_rate": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Link click rate"
+                  },
+                  "reply_rate": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Reply rate"
+                  }
+                }
+              }
+            }
           }
         }
       },

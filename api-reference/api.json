@@ -1,0 +1,1926 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "version": "1.0",
+    "title": "Reply API",
+    "description": "API for managing email sequences, contacts, and automation workflows"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/sequences": {
+      "get": {
+        "tags": ["Sequences"],
+        "summary": "List all sequences",
+        "description": "Returns a list of all sequences in your account",
+        "operationId": "get-sequences",
+        "responses": {
+          "200": {
+            "description": "List of sequences retrieved successfully"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Sequences"],
+        "summary": "Create a sequence",
+        "description": "Creates a new email sequence",
+        "operationId": "post-sequences",
+        "responses": {
+          "201": {
+            "description": "Sequence created successfully"
+          }
+        }
+      }
+    },
+    "/sequences/{id}": {
+      "get": {
+        "tags": ["Sequences"],
+        "summary": "Get a sequence",
+        "description": "Returns sequence details by ID",
+        "operationId": "get-sequences-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Sequence ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sequence details retrieved successfully"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Sequences"],
+        "summary": "Update a sequence",
+        "description": "Updates an existing sequence",
+        "operationId": "patch-sequences-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Sequence ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sequence updated successfully"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Sequences"],
+        "summary": "Delete a sequence",
+        "description": "Deletes an existing sequence",
+        "operationId": "delete-sequences-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Sequence ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Sequence deleted successfully"
+          }
+        }
+      }
+    },
+    "/sequences/{id}/start": {
+      "post": {
+        "tags": ["Sequence Actions"],
+        "summary": "Start a sequence",
+        "description": "Starts an existing sequence",
+        "operationId": "post-sequences-id-start",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Sequence ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sequence started successfully"
+          }
+        }
+      }
+    },
+    "/sequences/{id}/pause": {
+      "post": {
+        "tags": ["Sequence Actions"],
+        "summary": "Pause a sequence",
+        "description": "Pauses a running sequence",
+        "operationId": "post-sequences-id-pause",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Sequence ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sequence paused successfully"
+          }
+        }
+      }
+    },
+    "/sequences/{id}/archive": {
+      "post": {
+        "tags": ["Sequence Actions"],
+        "summary": "Archive a sequence",
+        "description": "Archives an existing sequence",
+        "operationId": "post-sequences-id-archive",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Sequence ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sequence archived successfully"
+          }
+        }
+      }
+    },
+    "/sequences/{id}/steps": {
+      "get": {
+        "tags": ["Sequence Steps"],
+        "summary": "List all sequence steps",
+        "description": "Returns a list of all steps in a sequence",
+        "operationId": "get-sequences-id-steps",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Sequence ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of sequence steps retrieved successfully"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Sequence Steps"],
+        "summary": "Create a sequence step",
+        "description": "Creates a new step in a sequence",
+        "operationId": "post-sequences-id-steps",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Sequence ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Sequence step created successfully"
+          }
+        }
+      }
+    },
+    "/sequences/{id}/steps/{step_id}": {
+      "get": {
+        "tags": ["Sequence Steps"],
+        "summary": "Get a sequence step",
+        "description": "Returns details of a specific sequence step",
+        "operationId": "get-sequences-id-steps-stepId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Sequence ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "step_id",
+            "in": "path",
+            "required": true,
+            "description": "Step ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sequence step details retrieved successfully"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Sequence Steps"],
+        "summary": "Update a sequence step",
+        "description": "Updates an existing sequence step",
+        "operationId": "patch-sequences-id-steps-stepId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Sequence ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "step_id",
+            "in": "path",
+            "required": true,
+            "description": "Step ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sequence step updated successfully"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Sequence Steps"],
+        "summary": "Delete a sequence step",
+        "description": "Deletes an existing sequence step",
+        "operationId": "delete-sequences-id-steps-stepId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Sequence ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "step_id",
+            "in": "path",
+            "required": true,
+            "description": "Step ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Sequence step deleted successfully"
+          }
+        }
+      }
+    },
+    "/sequences/{id}/steps/{step_id}/enable": {
+      "post": {
+        "tags": ["Sequence Steps Actions"],
+        "summary": "Enable a sequence step variant",
+        "description": "Enables a variant of a sequence step",
+        "operationId": "post-sequences-id-steps-stepId-enable",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Sequence ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "step_id",
+            "in": "path",
+            "required": true,
+            "description": "Step ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sequence step variant enabled successfully"
+          }
+        }
+      }
+    },
+    "/sequences/{id}/steps/{step_id}/disable": {
+      "post": {
+        "tags": ["Sequence Steps Actions"],
+        "summary": "Disable a sequence step variant",
+        "description": "Disables a variant of a sequence step",
+        "operationId": "post-sequences-id-steps-stepId-disable",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Sequence ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "step_id",
+            "in": "path",
+            "required": true,
+            "description": "Step ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sequence step variant disabled successfully"
+          }
+        }
+      }
+    },
+    "/sequences/schedules": {
+      "get": {
+        "tags": ["Sequence Schedules"],
+        "summary": "List all sequence schedules",
+        "description": "Returns a list of all sequence schedules",
+        "operationId": "get-sequences-schedules",
+        "responses": {
+          "200": {
+            "description": "List of sequence schedules retrieved successfully"
+          }
+        }
+      }
+    },
+    "/sequences/schedules/default": {
+      "get": {
+        "tags": ["Sequence Schedules"],
+        "summary": "Get default sequence schedule",
+        "description": "Returns the default sequence schedule settings",
+        "operationId": "get-sequences-schedules-default",
+        "responses": {
+          "200": {
+            "description": "Default sequence schedule retrieved successfully"
+          }
+        }
+      }
+    },
+    "/sequences/{id}/schedules": {
+      "post": {
+        "tags": ["Sequence Schedules"],
+        "summary": "Create a sequence schedule",
+        "description": "Creates a new schedule for a sequence",
+        "operationId": "post-sequences-id-schedules",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Sequence ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Sequence schedule created successfully"
+          }
+        }
+      }
+    },
+    "/sequences/{id}/schedules/{schedule_id}": {
+      "patch": {
+        "tags": ["Sequence Schedules"],
+        "summary": "Update a sequence schedule",
+        "description": "Updates an existing sequence schedule",
+        "operationId": "patch-sequences-id-schedules-scheduleId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Sequence ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "schedule_id",
+            "in": "path",
+            "required": true,
+            "description": "Schedule ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sequence schedule updated successfully"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Sequence Schedules"],
+        "summary": "Delete a sequence schedule",
+        "description": "Deletes an existing sequence schedule",
+        "operationId": "delete-sequences-id-schedules-scheduleId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Sequence ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "schedule_id",
+            "in": "path",
+            "required": true,
+            "description": "Schedule ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Sequence schedule deleted successfully"
+          }
+        }
+      }
+    },
+    "/contacts": {
+      "get": {
+        "tags": ["Contacts"],
+        "summary": "List all contacts",
+        "description": "Returns a list of all contacts in your account",
+        "operationId": "get-contacts",
+        "responses": {
+          "200": {
+            "description": "List of contacts retrieved successfully"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Contacts"],
+        "summary": "Create a contact",
+        "description": "Creates a new contact",
+        "operationId": "post-contacts",
+        "responses": {
+          "201": {
+            "description": "Contact created successfully"
+          }
+        }
+      }
+    },
+    "/contacts/{id}": {
+      "get": {
+        "tags": ["Contacts"],
+        "summary": "Get a contact",
+        "description": "Returns contact details by ID",
+        "operationId": "get-contacts-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Contact ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact details retrieved successfully"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Contacts"],
+        "summary": "Update a contact",
+        "description": "Updates an existing contact including status changes",
+        "operationId": "patch-contacts-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Contact ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact updated successfully"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Contacts"],
+        "summary": "Delete a contact",
+        "description": "Deletes an existing contact",
+        "operationId": "delete-contacts-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Contact ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Contact deleted successfully"
+          }
+        }
+      }
+    },
+    "/contacts/search": {
+      "get": {
+        "tags": ["Contacts"],
+        "summary": "Search contacts by email",
+        "description": "Returns contacts matching the email search criteria",
+        "operationId": "get-contacts-search",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "description": "Email address to search for",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results retrieved successfully"
+          }
+        }
+      }
+    },
+    "/contacts/{id}/sequences/": {
+      "get": {
+        "tags": ["Contact Sequences"],
+        "summary": "List contact sequences",
+        "description": "Returns a list of all sequences associated with a contact",
+        "operationId": "get-contacts-id-sequences",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Contact ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact sequences retrieved successfully"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Contact Sequences"],
+        "summary": "Add contact to sequence",
+        "description": "Adds a contact to a sequence",
+        "operationId": "post-contacts-id-sequences",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Contact ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact added to sequence successfully"
+          }
+        }
+      }
+    },
+    "/contacts/{contact_id}/sequences/{sequence_id}": {
+      "delete": {
+        "tags": ["Contact Sequences"],
+        "summary": "Remove contact from sequence",
+        "description": "Removes a contact from a specific sequence",
+        "operationId": "delete-contacts-contactId-sequences-sequenceId",
+        "parameters": [
+          {
+            "name": "contact_id",
+            "in": "path",
+            "required": true,
+            "description": "Contact ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sequence_id",
+            "in": "path",
+            "required": true,
+            "description": "Sequence ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Contact removed from sequence successfully"
+          }
+        }
+      }
+    },
+    "/contacts/{id}/sequences/{sequence_id}/": {
+      "post": {
+        "tags": ["Contact Sequences"],
+        "summary": "Add contact to sequence",
+        "description": "Adds a contact to a specific sequence",
+        "operationId": "post-contacts-id-sequences-sequenceId-add",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Contact ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sequence_id",
+            "in": "path",
+            "required": true,
+            "description": "Sequence ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact added to sequence successfully"
+          }
+        }
+      }
+    },
+    "/contacts/{id}/sequences/{sequence_id}": {
+      "delete": {
+        "tags": ["Contact Sequences"],
+        "summary": "Remove contact from sequence",
+        "description": "Removes a contact from a specific sequence",
+        "operationId": "delete-contacts-id-sequences-sequenceId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Contact ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sequence_id",
+            "in": "path",
+            "required": true,
+            "description": "Sequence ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Contact removed from sequence successfully"
+          }
+        }
+      }
+    },
+    "/contacts/{id}/sequences": {
+      "delete": {
+        "tags": ["Contact Sequences"],
+        "summary": "Remove contact from all sequences",
+        "description": "Removes a contact from all sequences",
+        "operationId": "delete-contacts-id-sequences",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Contact ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Contact removed from all sequences successfully"
+          }
+        }
+      }
+    },
+    "/lists": {
+      "get": {
+        "tags": ["Lists"],
+        "summary": "List all lists",
+        "description": "Returns a list of all contact lists",
+        "operationId": "get-lists",
+        "responses": {
+          "200": {
+            "description": "Lists retrieved successfully"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Lists"],
+        "summary": "Create a list",
+        "description": "Creates a new contact list",
+        "operationId": "post-lists",
+        "responses": {
+          "201": {
+            "description": "List created successfully"
+          }
+        }
+      }
+    },
+    "/lists/{id}": {
+      "get": {
+        "tags": ["Lists"],
+        "summary": "Get a list",
+        "description": "Returns list details by ID",
+        "operationId": "get-lists-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "List ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List details retrieved successfully"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Lists"],
+        "summary": "Update a list",
+        "description": "Updates an existing list",
+        "operationId": "patch-lists-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "List ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List updated successfully"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Lists"],
+        "summary": "Delete a list",
+        "description": "Deletes an existing list",
+        "operationId": "delete-lists-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "List ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "List deleted successfully"
+          }
+        }
+      }
+    },
+    "/lists/search": {
+      "get": {
+        "tags": ["Lists"],
+        "summary": "Search lists by name",
+        "description": "Returns lists matching the name search criteria",
+        "operationId": "get-lists-search",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "description": "List name to search for",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results retrieved successfully"
+          }
+        }
+      }
+    },
+    "/lists/{id}/contacts": {
+      "get": {
+        "tags": ["List Contacts"],
+        "summary": "List all contacts in a list",
+        "description": "Returns all contacts in a specific list",
+        "operationId": "get-lists-id-contacts",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "List ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List contacts retrieved successfully"
+          }
+        }
+      },
+      "post": {
+        "tags": ["List Contacts"],
+        "summary": "Add contacts to a list",
+        "description": "Adds one or more contacts to a list",
+        "operationId": "post-lists-id-contacts",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "List ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contacts added to list successfully"
+          }
+        }
+      }
+    },
+    "/lists/{id}/contacts/{contact_id}": {
+      "delete": {
+        "tags": ["List Contacts"],
+        "summary": "Remove a contact from a list",
+        "description": "Removes a specific contact from a list",
+        "operationId": "delete-lists-id-contacts-contactId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "List ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "contact_id",
+            "in": "path",
+            "required": true,
+            "description": "Contact ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Contact removed from list successfully"
+          }
+        }
+      }
+    },
+    "/templates": {
+      "get": {
+        "tags": ["Templates"],
+        "summary": "List all templates",
+        "description": "Returns a list of all email templates",
+        "operationId": "get-templates",
+        "responses": {
+          "200": {
+            "description": "Templates retrieved successfully"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Templates"],
+        "summary": "Create a template",
+        "description": "Creates a new email template",
+        "operationId": "post-templates",
+        "responses": {
+          "201": {
+            "description": "Template created successfully"
+          }
+        }
+      }
+    },
+    "/templates/{id}": {
+      "get": {
+        "tags": ["Templates"],
+        "summary": "Get a template",
+        "description": "Returns template details by ID",
+        "operationId": "get-templates-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Template ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Template details retrieved successfully"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Templates"],
+        "summary": "Update a template",
+        "description": "Updates an existing template",
+        "operationId": "patch-templates-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Template ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Template updated successfully"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Templates"],
+        "summary": "Delete a template",
+        "description": "Deletes an existing template",
+        "operationId": "delete-templates-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Template ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Template deleted successfully"
+          }
+        }
+      }
+    },
+    "/statistics/contacts/{id}": {
+      "get": {
+        "tags": ["Statistics"],
+        "summary": "Get contact statistics",
+        "description": "Returns statistics for a specific contact",
+        "operationId": "get-statistics-contacts-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Contact ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact statistics retrieved successfully"
+          }
+        }
+      }
+    },
+    "/statistics/contacts/{id}/sequences/{sequence_id}": {
+      "get": {
+        "tags": ["Statistics"],
+        "summary": "Get contact sequence status",
+        "description": "Returns the status of a contact in a specific sequence",
+        "operationId": "get-statistics-contacts-id-sequences-sequenceId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Contact ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sequence_id",
+            "in": "path",
+            "required": true,
+            "description": "Sequence ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact sequence status retrieved successfully"
+          }
+        }
+      }
+    },
+    "/statistics/sequences/{id}/contacts": {
+      "get": {
+        "tags": ["Statistics"],
+        "summary": "Get sequence contacts statistics",
+        "description": "Returns statistics about contacts sent per sequence",
+        "operationId": "get-statistics-sequences-id-contacts",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Sequence ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sequence contacts statistics retrieved successfully"
+          }
+        }
+      }
+    },
+    "/statistics/sequences/{id}/steps/{step_id}": {
+      "get": {
+        "tags": ["Statistics"],
+        "summary": "Get sequence step statistics",
+        "description": "Returns statistics for a specific step in a sequence",
+        "operationId": "get-statistics-sequences-id-steps-stepId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Sequence ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "step_id",
+            "in": "path",
+            "required": true,
+            "description": "Step ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sequence step statistics retrieved successfully"
+          }
+        }
+      }
+    },
+    "/statistics/sequences/{id}/clicks": {
+      "get": {
+        "tags": ["Statistics"],
+        "summary": "Get sequence clicks statistics",
+        "description": "Returns click statistics for a sequence",
+        "operationId": "get-statistics-sequences-id-clicks",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Sequence ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sequence clicks statistics retrieved successfully"
+          }
+        }
+      }
+    },
+    "/blacklist": {
+      "get": {
+        "tags": ["Blacklist"],
+        "summary": "List all blacklisted items",
+        "description": "Returns a list of all blacklisted domains and emails",
+        "operationId": "get-blacklist",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "description": "Filter by type (domain or email)",
+            "schema": {
+              "type": "string",
+              "enum": ["domain", "email"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Blacklisted items retrieved successfully"
+          }
+        }
+      }
+    },
+    "/blacklist/domains": {
+      "get": {
+        "tags": ["Blacklist Domains"],
+        "summary": "List all blacklisted domains",
+        "description": "Returns a list of all blacklisted domains",
+        "operationId": "get-blacklist-domains",
+        "responses": {
+          "200": {
+            "description": "Blacklisted domains retrieved successfully"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Blacklist Domains"],
+        "summary": "Add domains to blacklist",
+        "description": "Adds one or more domains to the blacklist",
+        "operationId": "post-blacklist-domains",
+        "responses": {
+          "201": {
+            "description": "Domains added to blacklist successfully"
+          }
+        }
+      }
+    },
+    "/blacklist/domains/{domain}": {
+      "get": {
+        "tags": ["Blacklist Domains"],
+        "summary": "Check if domain is blacklisted",
+        "description": "Checks if a specific domain is blacklisted",
+        "operationId": "get-blacklist-domains-domain",
+        "parameters": [
+          {
+            "name": "domain",
+            "in": "path",
+            "required": true,
+            "description": "Domain name",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Domain blacklist status retrieved successfully"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Blacklist Domains"],
+        "summary": "Remove domain from blacklist",
+        "description": "Removes a domain from the blacklist",
+        "operationId": "delete-blacklist-domains-domain",
+        "parameters": [
+          {
+            "name": "domain",
+            "in": "path",
+            "required": true,
+            "description": "Domain name",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Domain removed from blacklist successfully"
+          }
+        }
+      }
+    },
+    "/blacklist/emails": {
+      "get": {
+        "tags": ["Blacklist Emails"],
+        "summary": "List all blacklisted emails",
+        "description": "Returns a list of all blacklisted email addresses",
+        "operationId": "get-blacklist-emails",
+        "responses": {
+          "200": {
+            "description": "Blacklisted emails retrieved successfully"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Blacklist Emails"],
+        "summary": "Add emails to blacklist",
+        "description": "Adds one or more email addresses to the blacklist",
+        "operationId": "post-blacklist-emails",
+        "responses": {
+          "201": {
+            "description": "Emails added to blacklist successfully"
+          }
+        }
+      }
+    },
+    "/blacklist/emails/{email}": {
+      "get": {
+        "tags": ["Blacklist Emails"],
+        "summary": "Check if email is blacklisted",
+        "description": "Checks if a specific email address is blacklisted",
+        "operationId": "get-blacklist-emails-email",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "description": "Email address",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Email blacklist status retrieved successfully"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Blacklist Emails"],
+        "summary": "Remove email from blacklist",
+        "description": "Removes an email address from the blacklist",
+        "operationId": "delete-blacklist-emails-email",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "description": "Email address",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Email removed from blacklist successfully"
+          }
+        }
+      }
+    },
+    "/email-accounts": {
+      "get": {
+        "tags": ["Email Accounts"],
+        "summary": "List all email accounts",
+        "description": "Returns a list of all email accounts",
+        "operationId": "get-email-accounts",
+        "responses": {
+          "200": {
+            "description": "Email accounts retrieved successfully"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Email Accounts"],
+        "summary": "Create an email account",
+        "description": "Creates a new email account",
+        "operationId": "post-email-accounts",
+        "responses": {
+          "201": {
+            "description": "Email account created successfully"
+          }
+        }
+      }
+    },
+    "/email-accounts/{id}": {
+      "get": {
+        "tags": ["Email Accounts"],
+        "summary": "Get an email account",
+        "description": "Returns email account details by ID",
+        "operationId": "get-email-accounts-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Email Account ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Email account details retrieved successfully"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Email Accounts"],
+        "summary": "Update an email account",
+        "description": "Updates an existing email account",
+        "operationId": "patch-email-accounts-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Email Account ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Email account updated successfully"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Email Accounts"],
+        "summary": "Delete an email account",
+        "description": "Deletes an existing email account",
+        "operationId": "delete-email-accounts-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Email Account ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Email account deleted successfully"
+          }
+        }
+      }
+    },
+    "/shared-pages": {
+      "get": {
+        "tags": ["Shared Pages"],
+        "summary": "List all shared pages",
+        "description": "Returns a list of all shared pages",
+        "operationId": "get-shared-pages",
+        "responses": {
+          "200": {
+            "description": "Shared pages retrieved successfully"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Shared Pages"],
+        "summary": "Create a shared page",
+        "description": "Creates a new shared page",
+        "operationId": "post-shared-pages",
+        "responses": {
+          "201": {
+            "description": "Shared page created successfully"
+          }
+        }
+      }
+    },
+    "/shared-pages/{id}": {
+      "get": {
+        "tags": ["Shared Pages"],
+        "summary": "Get a shared page",
+        "description": "Returns shared page details by ID",
+        "operationId": "get-shared-pages-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Shared Page ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Shared page details retrieved successfully"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Shared Pages"],
+        "summary": "Update a shared page",
+        "description": "Updates an existing shared page",
+        "operationId": "patch-shared-pages-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Shared Page ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Shared page updated successfully"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Shared Pages"],
+        "summary": "Delete a shared page",
+        "description": "Deletes an existing shared page",
+        "operationId": "delete-shared-pages-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Shared Page ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Shared page deleted successfully"
+          }
+        }
+      }
+    },
+    "/emails": {
+      "get": {
+        "tags": ["Emails"],
+        "summary": "List all emails",
+        "description": "Returns a list of all email messages",
+        "operationId": "get-emails",
+        "responses": {
+          "200": {
+            "description": "Emails retrieved successfully"
+          }
+        }
+      }
+    },
+    "/emails/{id}": {
+      "get": {
+        "tags": ["Emails"],
+        "summary": "Get an email",
+        "description": "Returns email details by ID",
+        "operationId": "get-emails-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Email ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Email details retrieved successfully"
+          }
+        }
+      }
+    },
+    "/emails/{id}/content": {
+      "get": {
+        "tags": ["Emails"],
+        "summary": "Get email content",
+        "description": "Returns the content of an email message",
+        "operationId": "get-emails-id-content",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Email ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Email content retrieved successfully"
+          }
+        }
+      }
+    },
+    "/webhooks": {
+      "get": {
+        "tags": ["Webhooks"],
+        "summary": "List all webhook subscriptions",
+        "description": "Returns a list of all webhook subscriptions",
+        "operationId": "get-webhooks",
+        "responses": {
+          "200": {
+            "description": "Webhook subscriptions retrieved successfully"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Webhooks"],
+        "summary": "Create a webhook subscription",
+        "description": "Creates a new webhook subscription",
+        "operationId": "post-webhooks",
+        "responses": {
+          "201": {
+            "description": "Webhook subscription created successfully"
+          }
+        }
+      }
+    },
+    "/webhooks/{id}": {
+      "get": {
+        "tags": ["Webhooks"],
+        "summary": "Get a webhook subscription",
+        "description": "Returns webhook subscription details by ID",
+        "operationId": "get-webhooks-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Webhook ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Webhook subscription details retrieved successfully"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Webhooks"],
+        "summary": "Update a webhook subscription",
+        "description": "Updates an existing webhook subscription",
+        "operationId": "patch-webhooks-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Webhook ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Webhook subscription updated successfully"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Webhooks"],
+        "summary": "Delete a webhook subscription",
+        "description": "Deletes an existing webhook subscription",
+        "operationId": "delete-webhooks-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Webhook ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Webhook subscription deleted successfully"
+          }
+        }
+      }
+    },
+    "/webhooks/{id}/logs": {
+      "get": {
+        "tags": ["Webhooks"],
+        "summary": "Get webhook logs",
+        "description": "Returns logs for a webhook subscription",
+        "operationId": "get-webhooks-id-logs",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Webhook ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Webhook logs retrieved successfully"
+          }
+        }
+      }
+    },
+    "/reports/email": {
+      "get": {
+        "tags": ["Reports"],
+        "summary": "Generate email report",
+        "description": "Generates a report about email activities",
+        "operationId": "get-reports-email",
+        "responses": {
+          "200": {
+            "description": "Email report generated successfully"
+          }
+        }
+      }
+    },
+    "/reports/download/{id}": {
+      "get": {
+        "tags": ["Reports"],
+        "summary": "Download a report",
+        "description": "Downloads a generated report by ID",
+        "operationId": "get-reports-download-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Report ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Report downloaded successfully"
+          }
+        }
+      }
+    },
+    "/reports/contacts/status-changes": {
+      "get": {
+        "tags": ["Reports"],
+        "summary": "Get contacts status changes",
+        "description": "Returns a report of contacts with status changes",
+        "operationId": "get-reports-contacts-status-changes",
+        "responses": {
+          "200": {
+            "description": "Contact status changes report retrieved successfully"
+          }
+        }
+      }
+    },
+    "/branded-links": {
+      "get": {
+        "tags": ["Branded Links"],
+        "summary": "List all branded links",
+        "description": "Returns a list of all branded links",
+        "operationId": "get-branded-links",
+        "responses": {
+          "200": {
+            "description": "Branded links retrieved successfully"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Branded Links"],
+        "summary": "Create a branded link",
+        "description": "Creates a new branded link",
+        "operationId": "post-branded-links",
+        "responses": {
+          "201": {
+            "description": "Branded link created successfully"
+          }
+        }
+      }
+    },
+    "/branded-links/{id}": {
+      "get": {
+        "tags": ["Branded Links"],
+        "summary": "Get a branded link",
+        "description": "Returns branded link details by ID",
+        "operationId": "get-branded-links-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Branded Link ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Branded link details retrieved successfully"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Branded Links"],
+        "summary": "Update a branded link",
+        "description": "Updates an existing branded link",
+        "operationId": "patch-branded-links-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Branded Link ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Branded link updated successfully"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Branded Links"],
+        "summary": "Delete a branded link",
+        "description": "Deletes an existing branded link",
+        "operationId": "delete-branded-links-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Branded Link ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Branded link deleted successfully"
+          }
+        }
+      }
+    },
+    "/branded-links/{id}/activate": {
+      "post": {
+        "tags": ["Branded Links"],
+        "summary": "Activate a branded link",
+        "description": "Activates an existing branded link",
+        "operationId": "post-branded-links-id-activate",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Branded Link ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Branded link activated successfully"
+          }
+        }
+      }
+    },
+    "/branded-links/{id}/deactivate": {
+      "post": {
+        "tags": ["Branded Links"],
+        "summary": "Deactivate a branded link",
+        "description": "Deactivates an existing branded link",
+        "operationId": "post-branded-links-id-deactivate",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Branded Link ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Branded link deactivated successfully"
+          }
+        }
+      }
+    }
+  }
+}
