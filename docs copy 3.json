@@ -9,21 +9,11 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "languages": ["en", "fr"],
-    "versions": ["v1", "v2"],
     "tabs": [
       {
         "name": "API Documentation",
         "url": "api-reference", 
-        "openapi": "api-reference/api.json",
-        "tab": "API Documentation",
-        "href": "/api-reference",
-        "languages": ["en"],
-        "versions": ["v1"],
-        "dropdowns": [],
-        "anchors": [],
-        "groups": [],
-        "pages": []
+        "openapi": "api-reference/api.json"
       }
     ],
     "global": {
@@ -44,11 +34,7 @@
           "icon": "linkedin"
         }
       ]
-    },
-    "dropdowns": [],
-    "anchors": [],
-    "groups": [],
-    "pages": []
+    }
   },
   "logo": {
     "light": "/logo/light.svg",

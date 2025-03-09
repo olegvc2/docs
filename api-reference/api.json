@@ -13,40 +13,18 @@
   "paths": {
     "/sequences": {
       "get": {
-        "tags": ["Sequences"],
+        "tags": [
+          "Sequences"
+        ],
         "summary": "List all sequences",
         "description": "Returns a list of all sequences in your account",
         "operationId": "get-sequences",
-        "responses": {
-          "200": {
-            "description": "List of sequences retrieved successfully"
-          }
-        }
-      },
-      "post": {
-        "tags": ["Sequences"],
-        "summary": "Create a sequence",
-        "description": "Creates a new email sequence",
-        "operationId": "post-sequences",
-        "responses": {
-          "201": {
-            "description": "Sequence created successfully"
-          }
-        }
-      }
-    },
-    "/sequences/{id}": {
-      "get": {
-        "tags": ["Sequences"],
-        "summary": "Get a sequence",
-        "description": "Returns sequence details by ID",
-        "operationId": "get-sequences-id",
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Sequence ID",
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "description": "Filter sequences by name",
             "schema": {
               "type": "string"
             }
@@ -54,12 +32,87 @@
         ],
         "responses": {
           "200": {
-            "description": "Sequence details retrieved successfully"
+            "description": "List of sequences retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/sequence-info"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Sequences"
+        ],
+        "summary": "Create a sequence",
+        "description": "Creates a new email sequence",
+        "operationId": "post-sequences",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/sequence"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sequence created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/sequence"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sequences/{id}": {
+      "get": {
+        "tags": [
+          "Sequences"
+        ],
+        "summary": "Get a sequence",
+        "description": "Returns sequence details by Id",
+        "operationId": "get-sequences-id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Sequence Id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sequence details retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/sequence"
+                }
+              }
+            }
           }
         }
       },
       "patch": {
-        "tags": ["Sequences"],
+        "tags": [
+          "Sequences"
+        ],
         "summary": "Update a sequence",
         "description": "Updates an existing sequence",
         "operationId": "patch-sequences-id",
@@ -68,20 +121,39 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Sequence ID",
+            "description": "Sequence Id",
             "schema": {
               "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/sequence"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "Sequence updated successfully"
+            "description": "Sequence updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/sequence"
+                }
+              }
+            }
           }
         }
       },
       "delete": {
-        "tags": ["Sequences"],
+        "tags": [
+          "Sequences"
+        ],
         "summary": "Delete a sequence",
         "description": "Deletes an existing sequence",
         "operationId": "delete-sequences-id",
@@ -90,7 +162,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Sequence ID",
+            "description": "Sequence Id",
             "schema": {
               "type": "string"
             }
@@ -105,7 +177,9 @@
     },
     "/sequences/{id}/start": {
       "post": {
-        "tags": ["Sequence Actions"],
+        "tags": [
+          "Sequence Actions"
+        ],
         "summary": "Start a sequence",
         "description": "Starts an existing sequence",
         "operationId": "post-sequences-id-start",
@@ -114,7 +188,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Sequence ID",
+            "description": "Sequence Id",
             "schema": {
               "type": "string"
             }
@@ -122,14 +196,23 @@
         ],
         "responses": {
           "200": {
-            "description": "Sequence started successfully"
+            "description": "Sequence started successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/sequence-info"
+                }
+              }
+            }
           }
         }
       }
     },
     "/sequences/{id}/pause": {
       "post": {
-        "tags": ["Sequence Actions"],
+        "tags": [
+          "Sequence Actions"
+        ],
         "summary": "Pause a sequence",
         "description": "Pauses a running sequence",
         "operationId": "post-sequences-id-pause",
@@ -138,7 +221,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Sequence ID",
+            "description": "Sequence Id",
             "schema": {
               "type": "string"
             }
@@ -146,14 +229,23 @@
         ],
         "responses": {
           "200": {
-            "description": "Sequence paused successfully"
+            "description": "Sequence paused successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/sequence-info"
+                }
+              }
+            }
           }
         }
       }
     },
     "/sequences/{id}/archive": {
       "post": {
-        "tags": ["Sequence Actions"],
+        "tags": [
+          "Sequence Actions"
+        ],
         "summary": "Archive a sequence",
         "description": "Archives an existing sequence",
         "operationId": "post-sequences-id-archive",
@@ -162,7 +254,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Sequence ID",
+            "description": "Sequence Id",
             "schema": {
               "type": "string"
             }
@@ -170,14 +262,23 @@
         ],
         "responses": {
           "200": {
-            "description": "Sequence archived successfully"
+            "description": "Sequence archived successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/sequence-info"
+                }
+              }
+            }
           }
         }
       }
     },
     "/sequences/{id}/steps": {
       "get": {
-        "tags": ["Sequence Steps"],
+        "tags": [
+          "Sequence Steps"
+        ],
         "summary": "List all sequence steps",
         "description": "Returns a list of all steps in a sequence",
         "operationId": "get-sequences-id-steps",
@@ -186,7 +287,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Sequence ID",
+            "description": "Sequence Id",
             "schema": {
               "type": "string"
             }
@@ -194,36 +295,73 @@
         ],
         "responses": {
           "200": {
-            "description": "List of sequence steps retrieved successfully"
+            "description": "List of sequence steps retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/sequence-step"
+                  }
+                }
+              }
+            }
           }
         }
       },
       "post": {
-        "tags": ["Sequence Steps"],
-        "summary": "Create a sequence step",
-        "description": "Creates a new step in a sequence",
+        "tags": [
+          "Sequence Steps"
+        ],
+        "summary": "Create sequence steps",
+        "description": "Creates one or more new steps in a sequence",
         "operationId": "post-sequences-id-steps",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Sequence ID",
+            "description": "Sequence Id",
             "schema": {
               "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/sequence-step"
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "201": {
-            "description": "Sequence step created successfully"
+            "description": "Sequence steps created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/sequence-step"
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
     "/sequences/{id}/steps/{step_id}": {
       "get": {
-        "tags": ["Sequence Steps"],
+        "tags": [
+          "Sequence Steps"
+        ],
         "summary": "Get a sequence step",
         "description": "Returns details of a specific sequence step",
         "operationId": "get-sequences-id-steps-stepId",
@@ -232,7 +370,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Sequence ID",
+            "description": "Sequence Id",
             "schema": {
               "type": "string"
             }
@@ -241,7 +379,7 @@
             "name": "step_id",
             "in": "path",
             "required": true,
-            "description": "Step ID",
+            "description": "Step Id",
             "schema": {
               "type": "string"
             }
@@ -249,12 +387,21 @@
         ],
         "responses": {
           "200": {
-            "description": "Sequence step details retrieved successfully"
+            "description": "Sequence step details retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/sequence-step"
+                }
+              }
+            }
           }
         }
       },
       "patch": {
-        "tags": ["Sequence Steps"],
+        "tags": [
+          "Sequence Steps"
+        ],
         "summary": "Update a sequence step",
         "description": "Updates an existing sequence step",
         "operationId": "patch-sequences-id-steps-stepId",
@@ -263,7 +410,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Sequence ID",
+            "description": "Sequence Id",
             "schema": {
               "type": "string"
             }
@@ -272,20 +419,39 @@
             "name": "step_id",
             "in": "path",
             "required": true,
-            "description": "Step ID",
+            "description": "Step Id",
             "schema": {
               "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/sequence-step"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "Sequence step updated successfully"
+            "description": "Sequence step updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/sequence-step"
+                }
+              }
+            }
           }
         }
       },
       "delete": {
-        "tags": ["Sequence Steps"],
+        "tags": [
+          "Sequence Steps"
+        ],
         "summary": "Delete a sequence step",
         "description": "Deletes an existing sequence step",
         "operationId": "delete-sequences-id-steps-stepId",
@@ -294,7 +460,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Sequence ID",
+            "description": "Sequence Id",
             "schema": {
               "type": "string"
             }
@@ -303,7 +469,7 @@
             "name": "step_id",
             "in": "path",
             "required": true,
-            "description": "Step ID",
+            "description": "Step Id",
             "schema": {
               "type": "string"
             }
@@ -318,7 +484,9 @@
     },
     "/sequences/{id}/steps/{step_id}/enable": {
       "post": {
-        "tags": ["Sequence Steps Actions"],
+        "tags": [
+          "Sequence Steps Actions"
+        ],
         "summary": "Enable a sequence step variant",
         "description": "Enables a variant of a sequence step",
         "operationId": "post-sequences-id-steps-stepId-enable",
@@ -327,7 +495,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Sequence ID",
+            "description": "Sequence Id",
             "schema": {
               "type": "string"
             }
@@ -336,7 +504,7 @@
             "name": "step_id",
             "in": "path",
             "required": true,
-            "description": "Step ID",
+            "description": "Step Id",
             "schema": {
               "type": "string"
             }
@@ -344,14 +512,52 @@
         ],
         "responses": {
           "200": {
-            "description": "Sequence step variant enabled successfully"
+            "description": "Sequence step variant enabled successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "stepId": {
+                        "type": "integer",
+                        "example": 42744,
+                        "description": "Unique identifier for the sequence step"
+                      },
+                      "emailVariants": {
+                        "type": "array",
+                        "description": "List of email variants associated with the step",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "variantId": {
+                              "type": "integer",
+                              "example": 97765,
+                              "description": "Unique identifier for the email variant"
+                            },
+                            "isEnabled": {
+                              "type": "boolean",
+                              "example": true,
+                              "description": "Indicates whether the variant is enabled or disabled"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
     "/sequences/{id}/steps/{step_id}/disable": {
       "post": {
-        "tags": ["Sequence Steps Actions"],
+        "tags": [
+          "Sequence Steps Actions"
+        ],
         "summary": "Disable a sequence step variant",
         "description": "Disables a variant of a sequence step",
         "operationId": "post-sequences-id-steps-stepId-disable",
@@ -360,7 +566,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Sequence ID",
+            "description": "Sequence Id",
             "schema": {
               "type": "string"
             }
@@ -369,7 +575,7 @@
             "name": "step_id",
             "in": "path",
             "required": true,
-            "description": "Step ID",
+            "description": "Step Id",
             "schema": {
               "type": "string"
             }
@@ -377,161 +583,530 @@
         ],
         "responses": {
           "200": {
-            "description": "Sequence step variant disabled successfully"
+            "description": "Sequence step variant disabled successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "stepId": {
+                        "type": "integer",
+                        "example": 42744,
+                        "description": "Unique identifier for the sequence step"
+                      },
+                      "emailVariants": {
+                        "type": "array",
+                        "description": "List of email variants associated with the step",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "variantId": {
+                              "type": "integer",
+                              "example": 97765,
+                              "description": "Unique identifier for the email variant"
+                            },
+                            "isEnabled": {
+                              "type": "boolean",
+                              "example": true,
+                              "description": "Indicates whether the variant is enabled or disabled"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
-    "/sequences/schedules": {
+    "/sequences/{id}/contacts": {
       "get": {
-        "tags": ["Sequence Schedules"],
-        "summary": "List all sequence schedules",
-        "description": "Returns a list of all sequence schedules",
-        "operationId": "get-sequences-schedules",
-        "responses": {
-          "200": {
-            "description": "List of sequence schedules retrieved successfully"
-          }
-        }
-      }
-    },
-    "/sequences/schedules/default": {
-      "get": {
-        "tags": ["Sequence Schedules"],
-        "summary": "Get default sequence schedule",
-        "description": "Returns the default sequence schedule settings",
-        "operationId": "get-sequences-schedules-default",
-        "responses": {
-          "200": {
-            "description": "Default sequence schedule retrieved successfully"
-          }
-        }
-      }
-    },
-    "/sequences/{id}/schedules": {
-      "post": {
-        "tags": ["Sequence Schedules"],
-        "summary": "Create a sequence schedule",
-        "description": "Creates a new schedule for a sequence",
-        "operationId": "post-sequences-id-schedules",
+        "summary": "List contacts in sequence",
+        "description": "Retrieve all contacts enrolled in the sequence",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Sequence ID",
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Sequence ID"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 50
+            },
+            "description": "Items per page"
           }
         ],
+        "responses": {
+          "200": {
+            "description": "List of contacts in sequence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/contact"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "integer"
+                        },
+                        "page": {
+                          "type": "integer"
+                        },
+                        "limit": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Sequence Contacts"
+        ]
+      },
+      "post": {
+        "summary": "Add contact to sequence",
+        "description": "Add an existing or new contact to the sequence.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Sequence ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Either provide an existing contactId to add to the sequence, or provide a contact object. If a contact object is provided and the contact doesn't exist in the system, a new contact will be created before being added to the sequence.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contactId": {
+                    "type": "integer",
+                    "description": "Existing contact ID"
+                  },
+                  "contact": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/contact",
+                    "description": "Contact object. If provided instead of contactId and contact doesn't exist, it will be created"
+                  },
+                  "forcePush": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "If true, the contact will be moved from their current sequence to this sequence. If false, the contact will remain in their current sequence and won't be added to this sequence."
+                  },
+                  "startStep": {
+                    "type": "string",
+                    "description": "Optional step ID to start from"
+                  }
+                },
+                "oneOf": [
+                  {
+                    "required": [
+                      "contactId"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "contact"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
         "responses": {
           "201": {
-            "description": "Sequence schedule created successfully"
+            "description": "Contact added to sequence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/contact"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Sequence or contact not found"
+          },
+          "409": {
+            "description": "Contact already in sequence"
           }
-        }
+        },
+        "tags": [
+          "Sequence Contacts"
+        ]
       }
     },
-    "/sequences/{id}/schedules/{schedule_id}": {
-      "patch": {
-        "tags": ["Sequence Schedules"],
-        "summary": "Update a sequence schedule",
-        "description": "Updates an existing sequence schedule",
-        "operationId": "patch-sequences-id-schedules-scheduleId",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Sequence ID",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "schedule_id",
-            "in": "path",
-            "required": true,
-            "description": "Schedule ID",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Sequence schedule updated successfully"
-          }
-        }
-      },
+    "/sequences/{id}/contacts/{contact_id}": {
       "delete": {
-        "tags": ["Sequence Schedules"],
-        "summary": "Delete a sequence schedule",
-        "description": "Deletes an existing sequence schedule",
-        "operationId": "delete-sequences-id-schedules-scheduleId",
+        "summary": "Remove contact from sequence",
+        "description": "Remove a contact from the sequence or optionally from all sequences",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Sequence ID",
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Sequence ID"
           },
           {
-            "name": "schedule_id",
+            "name": "contactId",
             "in": "path",
             "required": true,
-            "description": "Schedule ID",
             "schema": {
-              "type": "string"
-            }
+              "type": "integer"
+            },
+            "description": "Contact ID"
           }
         ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "removeFromAll": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "If true, removes the contact from all sequences instead of just the specified sequence"
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "204": {
-            "description": "Sequence schedule deleted successfully"
+            "description": "Contact removed from sequence"
+          },
+          "404": {
+            "description": "Sequence or contact not found"
           }
-        }
+        },
+        "tags": [
+          "Sequence Contacts"
+        ]
+      }
+    },
+    "/sequences/{id}/contacts/bulk": {
+      "post": {
+        "summary": "Bulk add contacts to sequence",
+        "description": "Add multiple contacts to the sequence at once",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Sequence ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "contactIds"
+                ],
+                "properties": {
+                  "contactIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  },
+                  "forcePush": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "If true, contacts will be moved from their current sequences to this one. If false, contacts will remain in their current sequences and won't be added to this one."
+                  },
+                  "startStep": {
+                    "type": "string",
+                    "description": "Optional step ID to start from"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Contacts added to sequence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "added": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer"
+                      },
+                      "description": "IDs of successfully added contacts"
+                    },
+                    "invalidEmailSkips": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer"
+                      },
+                      "description": "Contact IDs that were skipped due to invalid email addresses"
+                    },
+                    "ownershipSkips": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer"
+                      },
+                      "description": "Contact IDs that were skipped due to ownership restrictions"
+                    },
+                    "optOutSkips": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer"
+                      },
+                      "description": "Contact IDs that were skipped due to opt-out status"
+                    }
+                  }
+                },
+                "example": {
+                  "added": [
+                    123,
+                    124,
+                    125
+                  ],
+                  "invalidEmailSkips": [
+                    126,
+                    127
+                  ],
+                  "ownershipSkips": [
+                    128
+                  ],
+                  "optOutSkips": [
+                    129,
+                    130
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Sequence not found"
+          }
+        },
+        "tags": [
+          "Sequence Contacts"
+        ]
+      },
+      "delete": {
+        "summary": "Bulk remove contacts from sequence",
+        "description": "Remove multiple contacts from the sequence at once",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Sequence ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "contactIds"
+                ],
+                "properties": {
+                  "contactIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Contacts removed from sequence"
+          },
+          "404": {
+            "description": "Sequence not found"
+          }
+        },
+        "tags": [
+          "Sequence Contacts"
+        ]
       }
     },
     "/contacts": {
       "get": {
-        "tags": ["Contacts"],
+        "tags": [
+          "Contacts"
+        ],
         "summary": "List all contacts",
-        "description": "Returns a list of all contacts in your account",
+        "description": "Returns a paginated list of all contacts in your account",
         "operationId": "get-contacts",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number (1-based)",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of items per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": "List of contacts retrieved successfully"
+            "description": "List of contacts retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/contact"
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "integer",
+                          "description": "Total number of contacts"
+                        },
+                        "pages": {
+                          "type": "integer",
+                          "description": "Total number of pages"
+                        },
+                        "currentPage": {
+                          "type": "integer",
+                          "description": "Current page number"
+                        },
+                        "limit": {
+                          "type": "integer",
+                          "description": "Items per page"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
       "post": {
-        "tags": ["Contacts"],
+        "tags": [
+          "Contacts"
+        ],
         "summary": "Create a contact",
         "description": "Creates a new contact",
         "operationId": "post-contacts",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/contact"
+              }
+            }
+          }
+        },
         "responses": {
           "201": {
-            "description": "Contact created successfully"
+            "description": "Contact created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/contact"
+                }
+              }
+            }
           }
         }
       }
     },
     "/contacts/{id}": {
       "get": {
-        "tags": ["Contacts"],
+        "tags": [
+          "Contacts"
+        ],
         "summary": "Get a contact",
-        "description": "Returns contact details by ID",
+        "description": "Returns contact details by Id",
         "operationId": "get-contacts-id",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Contact ID",
+            "description": "Contact Id",
             "schema": {
               "type": "string"
             }
@@ -539,12 +1114,24 @@
         ],
         "responses": {
           "200": {
-            "description": "Contact details retrieved successfully"
+            "description": "Contact details retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/contact"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Contact not found"
           }
         }
       },
       "patch": {
-        "tags": ["Contacts"],
+        "tags": [
+          "Contacts"
+        ],
         "summary": "Update a contact",
         "description": "Updates an existing contact including status changes",
         "operationId": "patch-contacts-id",
@@ -553,20 +1140,42 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Contact ID",
+            "description": "Contact Id",
             "schema": {
               "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/contact"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "Contact updated successfully"
+            "description": "Contact updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/contact"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Contact not found"
           }
         }
       },
       "delete": {
-        "tags": ["Contacts"],
+        "tags": [
+          "Contacts"
+        ],
         "summary": "Delete a contact",
         "description": "Deletes an existing contact",
         "operationId": "delete-contacts-id",
@@ -575,7 +1184,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Contact ID",
+            "description": "Contact Id",
             "schema": {
               "type": "string"
             }
@@ -590,7 +1199,9 @@
     },
     "/contacts/search": {
       "get": {
-        "tags": ["Contacts"],
+        "tags": [
+          "Contacts"
+        ],
         "summary": "Search contacts by email",
         "description": "Returns contacts matching the email search criteria",
         "operationId": "get-contacts-search",
@@ -607,229 +1218,191 @@
         ],
         "responses": {
           "200": {
-            "description": "Search results retrieved successfully"
-          }
-        }
-      }
-    },
-    "/contacts/{id}/sequences/": {
-      "get": {
-        "tags": ["Contact Sequences"],
-        "summary": "List contact sequences",
-        "description": "Returns a list of all sequences associated with a contact",
-        "operationId": "get-contacts-id-sequences",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Contact ID",
-            "schema": {
-              "type": "string"
+            "description": "Search results retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/contact"
+                  }
+                }
+              }
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Contact sequences retrieved successfully"
-          }
-        }
-      },
-      "post": {
-        "tags": ["Contact Sequences"],
-        "summary": "Add contact to sequence",
-        "description": "Adds a contact to a sequence",
-        "operationId": "post-contacts-id-sequences",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Contact ID",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Contact added to sequence successfully"
-          }
-        }
-      }
-    },
-    "/contacts/{contact_id}/sequences/{sequence_id}": {
-      "delete": {
-        "tags": ["Contact Sequences"],
-        "summary": "Remove contact from sequence",
-        "description": "Removes a contact from a specific sequence",
-        "operationId": "delete-contacts-contactId-sequences-sequenceId",
-        "parameters": [
-          {
-            "name": "contact_id",
-            "in": "path",
-            "required": true,
-            "description": "Contact ID",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "sequence_id",
-            "in": "path",
-            "required": true,
-            "description": "Sequence ID",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Contact removed from sequence successfully"
-          }
-        }
-      }
-    },
-    "/contacts/{id}/sequences/{sequence_id}/": {
-      "post": {
-        "tags": ["Contact Sequences"],
-        "summary": "Add contact to sequence",
-        "description": "Adds a contact to a specific sequence",
-        "operationId": "post-contacts-id-sequences-sequenceId-add",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Contact ID",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "sequence_id",
-            "in": "path",
-            "required": true,
-            "description": "Sequence ID",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Contact added to sequence successfully"
-          }
-        }
-      }
-    },
-    "/contacts/{id}/sequences/{sequence_id}": {
-      "delete": {
-        "tags": ["Contact Sequences"],
-        "summary": "Remove contact from sequence",
-        "description": "Removes a contact from a specific sequence",
-        "operationId": "delete-contacts-id-sequences-sequenceId",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Contact ID",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "sequence_id",
-            "in": "path",
-            "required": true,
-            "description": "Sequence ID",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Contact removed from sequence successfully"
-          }
-        }
-      }
-    },
-    "/contacts/{id}/sequences": {
-      "delete": {
-        "tags": ["Contact Sequences"],
-        "summary": "Remove contact from all sequences",
-        "description": "Removes a contact from all sequences",
-        "operationId": "delete-contacts-id-sequences",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Contact ID",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Contact removed from all sequences successfully"
           }
         }
       }
     },
     "/lists": {
       "get": {
-        "tags": ["Lists"],
+        "tags": [
+          "Lists"
+        ],
         "summary": "List all lists",
-        "description": "Returns a list of all contact lists",
+        "description": "Returns all contact lists",
         "operationId": "get-lists",
         "responses": {
           "200": {
-            "description": "Lists retrieved successfully"
+            "description": "Lists retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "description": "Unique identifier"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "List name"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name"
+                    ]
+                  }
+                },
+                "example": [
+                  {
+                    "id": 1,
+                    "name": "Potential Clients"
+                  },
+                  {
+                    "id": 2,
+                    "name": "Active Customers"
+                  },
+                  {
+                    "id": 3,
+                    "name": "Newsletter Subscribers"
+                  }
+                ]
+              }
+            }
           }
         }
       },
       "post": {
-        "tags": ["Lists"],
+        "tags": [
+          "Lists"
+        ],
         "summary": "Create a list",
         "description": "Creates a new contact list",
         "operationId": "post-lists",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "List name"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "example": {
+                "name": "Valuable Contacts"
+              }
+            }
+          }
+        },
         "responses": {
           "201": {
-            "description": "List created successfully"
+            "description": "List created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "Unique identifier"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "List name"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name"
+                  ]
+                },
+                "example": {
+                  "id": 4,
+                  "name": "Valuable Contacts"
+                }
+              }
+            }
           }
         }
       }
     },
     "/lists/{id}": {
       "get": {
-        "tags": ["Lists"],
+        "tags": [
+          "Lists"
+        ],
         "summary": "Get a list",
-        "description": "Returns list details by ID",
+        "description": "Returns list details by Id",
         "operationId": "get-lists-id",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "List ID",
+            "description": "List Id",
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "List details retrieved successfully"
+            "description": "List details retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "Unique identifier"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "List name"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name"
+                  ]
+                },
+                "example": {
+                  "id": 1,
+                  "name": "Potential Clients"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "List not found"
           }
         }
       },
       "patch": {
-        "tags": ["Lists"],
+        "tags": [
+          "Lists"
+        ],
         "summary": "Update a list",
         "description": "Updates an existing list",
         "operationId": "patch-lists-id",
@@ -838,20 +1411,72 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "List ID",
+            "description": "List Id",
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "List name"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "example": {
+                "name": "Updated List Name"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "List updated successfully"
+            "description": "List updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "Unique identifier"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "List name"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name"
+                  ]
+                },
+                "example": {
+                  "id": 1,
+                  "name": "Updated List Name"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "List not found"
           }
         }
       },
       "delete": {
-        "tags": ["Lists"],
+        "tags": [
+          "Lists"
+        ],
         "summary": "Delete a list",
         "description": "Deletes an existing list",
         "operationId": "delete-lists-id",
@@ -860,158 +1485,91 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "List ID",
+            "description": "List Id",
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
         "responses": {
           "204": {
             "description": "List deleted successfully"
-          }
-        }
-      }
-    },
-    "/lists/search": {
-      "get": {
-        "tags": ["Lists"],
-        "summary": "Search lists by name",
-        "description": "Returns lists matching the name search criteria",
-        "operationId": "get-lists-search",
-        "parameters": [
-          {
-            "name": "name",
-            "in": "query",
-            "required": true,
-            "description": "List name to search for",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Search results retrieved successfully"
-          }
-        }
-      }
-    },
-    "/lists/{id}/contacts": {
-      "get": {
-        "tags": ["List Contacts"],
-        "summary": "List all contacts in a list",
-        "description": "Returns all contacts in a specific list",
-        "operationId": "get-lists-id-contacts",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "List ID",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "List contacts retrieved successfully"
-          }
-        }
-      },
-      "post": {
-        "tags": ["List Contacts"],
-        "summary": "Add contacts to a list",
-        "description": "Adds one or more contacts to a list",
-        "operationId": "post-lists-id-contacts",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "List ID",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Contacts added to list successfully"
-          }
-        }
-      }
-    },
-    "/lists/{id}/contacts/{contact_id}": {
-      "delete": {
-        "tags": ["List Contacts"],
-        "summary": "Remove a contact from a list",
-        "description": "Removes a specific contact from a list",
-        "operationId": "delete-lists-id-contacts-contactId",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "List ID",
-            "schema": {
-              "type": "string"
-            }
           },
-          {
-            "name": "contact_id",
-            "in": "path",
-            "required": true,
-            "description": "Contact ID",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Contact removed from list successfully"
+          "404": {
+            "description": "List not found"
           }
         }
       }
     },
     "/templates": {
       "get": {
-        "tags": ["Templates"],
+        "tags": [
+          "Templates"
+        ],
         "summary": "List all templates",
         "description": "Returns a list of all email templates",
         "operationId": "get-templates",
         "responses": {
           "200": {
-            "description": "Templates retrieved successfully"
+            "description": "Templates retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/template"
+                  }
+                }
+              }
+            }
           }
         }
       },
       "post": {
-        "tags": ["Templates"],
+        "tags": [
+          "Templates"
+        ],
         "summary": "Create a template",
         "description": "Creates a new email template",
         "operationId": "post-templates",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/template"
+              }
+            }
+          }
+        },
         "responses": {
           "201": {
-            "description": "Template created successfully"
+            "description": "Template created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/template"
+                }
+              }
+            }
           }
         }
       }
     },
     "/templates/{id}": {
       "get": {
-        "tags": ["Templates"],
+        "tags": [
+          "Templates"
+        ],
         "summary": "Get a template",
-        "description": "Returns template details by ID",
+        "description": "Returns template details by Id",
         "operationId": "get-templates-id",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Template ID",
+            "description": "Template Id",
             "schema": {
               "type": "string"
             }
@@ -1019,12 +1577,21 @@
         ],
         "responses": {
           "200": {
-            "description": "Template details retrieved successfully"
+            "description": "Template details retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/template"
+                }
+              }
+            }
           }
         }
       },
       "patch": {
-        "tags": ["Templates"],
+        "tags": [
+          "Templates"
+        ],
         "summary": "Update a template",
         "description": "Updates an existing template",
         "operationId": "patch-templates-id",
@@ -1033,20 +1600,39 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Template ID",
+            "description": "Template Id",
             "schema": {
               "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/template"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "Template updated successfully"
+            "description": "Template updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/template"
+                }
+              }
+            }
           }
         }
       },
       "delete": {
-        "tags": ["Templates"],
+        "tags": [
+          "Templates"
+        ],
         "summary": "Delete a template",
         "description": "Deletes an existing template",
         "operationId": "delete-templates-id",
@@ -1055,7 +1641,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Template ID",
+            "description": "Template Id",
             "schema": {
               "type": "string"
             }
@@ -1068,345 +1654,203 @@
         }
       }
     },
-    "/statistics/contacts/{id}": {
-      "get": {
-        "tags": ["Statistics"],
-        "summary": "Get contact statistics",
-        "description": "Returns statistics for a specific contact",
-        "operationId": "get-statistics-contacts-id",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Contact ID",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Contact statistics retrieved successfully"
-          }
-        }
-      }
-    },
-    "/statistics/contacts/{id}/sequences/{sequence_id}": {
-      "get": {
-        "tags": ["Statistics"],
-        "summary": "Get contact sequence status",
-        "description": "Returns the status of a contact in a specific sequence",
-        "operationId": "get-statistics-contacts-id-sequences-sequenceId",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Contact ID",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "sequence_id",
-            "in": "path",
-            "required": true,
-            "description": "Sequence ID",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Contact sequence status retrieved successfully"
-          }
-        }
-      }
-    },
-    "/statistics/sequences/{id}/contacts": {
-      "get": {
-        "tags": ["Statistics"],
-        "summary": "Get sequence contacts statistics",
-        "description": "Returns statistics about contacts sent per sequence",
-        "operationId": "get-statistics-sequences-id-contacts",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Sequence ID",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Sequence contacts statistics retrieved successfully"
-          }
-        }
-      }
-    },
-    "/statistics/sequences/{id}/steps/{step_id}": {
-      "get": {
-        "tags": ["Statistics"],
-        "summary": "Get sequence step statistics",
-        "description": "Returns statistics for a specific step in a sequence",
-        "operationId": "get-statistics-sequences-id-steps-stepId",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Sequence ID",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "step_id",
-            "in": "path",
-            "required": true,
-            "description": "Step ID",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Sequence step statistics retrieved successfully"
-          }
-        }
-      }
-    },
-    "/statistics/sequences/{id}/clicks": {
-      "get": {
-        "tags": ["Statistics"],
-        "summary": "Get sequence clicks statistics",
-        "description": "Returns click statistics for a sequence",
-        "operationId": "get-statistics-sequences-id-clicks",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Sequence ID",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Sequence clicks statistics retrieved successfully"
-          }
-        }
-      }
-    },
     "/blacklist": {
       "get": {
-        "tags": ["Blacklist"],
-        "summary": "List all blacklisted items",
-        "description": "Returns a list of all blacklisted domains and emails",
-        "operationId": "get-blacklist",
+        "tags": [
+          "Black List"
+        ],
+        "summary": "Get all blacklist items",
         "parameters": [
           {
-            "name": "type",
             "in": "query",
-            "required": false,
-            "description": "Filter by type (domain or email)",
+            "name": "type",
             "schema": {
               "type": "string",
-              "enum": ["domain", "email"]
-            }
+              "enum": [
+                "domain",
+                "email"
+              ]
+            },
+            "required": false,
+            "description": "Flter blacklist items by type (domain or email)"
           }
         ],
         "responses": {
           "200": {
-            "description": "Blacklisted items retrieved successfully"
-          }
-        }
-      }
-    },
-    "/blacklist/domains": {
-      "get": {
-        "tags": ["Blacklist Domains"],
-        "summary": "List all blacklisted domains",
-        "description": "Returns a list of all blacklisted domains",
-        "operationId": "get-blacklist-domains",
-        "responses": {
-          "200": {
-            "description": "Blacklisted domains retrieved successfully"
+            "description": "List of blacklist items",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BlackListItems"
+                  }
+                }
+              }
+            }
           }
         }
       },
       "post": {
-        "tags": ["Blacklist Domains"],
-        "summary": "Add domains to blacklist",
-        "description": "Adds one or more domains to the blacklist",
-        "operationId": "post-blacklist-domains",
-        "responses": {
-          "201": {
-            "description": "Domains added to blacklist successfully"
-          }
-        }
-      }
-    },
-    "/blacklist/domains/{domain}": {
-      "get": {
-        "tags": ["Blacklist Domains"],
-        "summary": "Check if domain is blacklisted",
-        "description": "Checks if a specific domain is blacklisted",
-        "operationId": "get-blacklist-domains-domain",
-        "parameters": [
-          {
-            "name": "domain",
-            "in": "path",
-            "required": true,
-            "description": "Domain name",
-            "schema": {
-              "type": "string"
+        "tags": [
+          "Black List"
+        ],
+        "summary": "Create new blacklist items",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlackListItems"
+              }
             }
           }
-        ],
+        },
         "responses": {
-          "200": {
-            "description": "Domain blacklist status retrieved successfully"
+          "201": {
+            "description": "Blacklist items created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BlackListItems"
+                }
+              }
+            }
           }
         }
       },
       "delete": {
-        "tags": ["Blacklist Domains"],
-        "summary": "Remove domain from blacklist",
-        "description": "Removes a domain from the blacklist",
-        "operationId": "delete-blacklist-domains-domain",
-        "parameters": [
-          {
-            "name": "domain",
-            "in": "path",
-            "required": true,
-            "description": "Domain name",
-            "schema": {
-              "type": "string"
+        "tags": [
+          "Black List"
+        ],
+        "summary": "Delete blacklist items",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/BlackListItems"
+                }
+              }
             }
           }
-        ],
-        "responses": {
-          "204": {
-            "description": "Domain removed from blacklist successfully"
-          }
-        }
-      }
-    },
-    "/blacklist/emails": {
-      "get": {
-        "tags": ["Blacklist Emails"],
-        "summary": "List all blacklisted emails",
-        "description": "Returns a list of all blacklisted email addresses",
-        "operationId": "get-blacklist-emails",
+        },
         "responses": {
           "200": {
-            "description": "Blacklisted emails retrieved successfully"
-          }
-        }
-      },
-      "post": {
-        "tags": ["Blacklist Emails"],
-        "summary": "Add emails to blacklist",
-        "description": "Adds one or more email addresses to the blacklist",
-        "operationId": "post-blacklist-emails",
-        "responses": {
-          "201": {
-            "description": "Emails added to blacklist successfully"
-          }
-        }
-      }
-    },
-    "/blacklist/emails/{email}": {
-      "get": {
-        "tags": ["Blacklist Emails"],
-        "summary": "Check if email is blacklisted",
-        "description": "Checks if a specific email address is blacklisted",
-        "operationId": "get-blacklist-emails-email",
-        "parameters": [
-          {
-            "name": "email",
-            "in": "path",
-            "required": true,
-            "description": "Email address",
-            "schema": {
-              "type": "string"
+            "description": "Blacklist items deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Items deleted successfully"
+                    }
+                  }
+                }
+              }
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Email blacklist status retrieved successfully"
-          }
-        }
-      },
-      "delete": {
-        "tags": ["Blacklist Emails"],
-        "summary": "Remove email from blacklist",
-        "description": "Removes an email address from the blacklist",
-        "operationId": "delete-blacklist-emails-email",
-        "parameters": [
-          {
-            "name": "email",
-            "in": "path",
-            "required": true,
-            "description": "Email address",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Email removed from blacklist successfully"
           }
         }
       }
     },
     "/email-accounts": {
       "get": {
-        "tags": ["Email Accounts"],
+        "tags": [
+          "Email Accounts"
+        ],
         "summary": "List all email accounts",
         "description": "Returns a list of all email accounts",
         "operationId": "get-email-accounts",
         "responses": {
           "200": {
-            "description": "Email accounts retrieved successfully"
+            "description": "Email accounts retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "description": "Unique identifier for the email account"
+                      },
+                      "senderName": {
+                        "type": "string",
+                        "description": "Name of the sender"
+                      },
+                      "emailAddress": {
+                        "type": "string",
+                        "format": "email",
+                        "description": "Email address"
+                      },
+                      "signature": {
+                        "type": "string",
+                        "description": "Email signature"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "senderName",
+                      "emailAddress",
+                      "signature"
+                    ]
+                  }
+                }
+              }
+            }
           }
         }
       },
       "post": {
-        "tags": ["Email Accounts"],
+        "tags": [
+          "Email Accounts"
+        ],
         "summary": "Create an email account",
-        "description": "Creates a new email account",
+        "description": "Creates a new email account. Only works with custom email account providers (SMTP/IMAP).",
         "operationId": "post-email-accounts",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SMTPEmailAccount"
+              }
+            }
+          }
+        },
         "responses": {
           "201": {
-            "description": "Email account created successfully"
+            "description": "Email account created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SMTPEmailAccount"
+                }
+              }
+            }
           }
         }
       }
     },
     "/email-accounts/{id}": {
       "get": {
-        "tags": ["Email Accounts"],
+        "tags": [
+          "Email Accounts"
+        ],
         "summary": "Get an email account",
-        "description": "Returns email account details by ID",
+        "description": "Returns email account details by Id. Only works with custom email account providers (SMTP/IMAP).",
         "operationId": "get-email-accounts-id",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Email Account ID",
+            "description": "Email Account Id",
             "schema": {
               "type": "string"
             }
@@ -1414,34 +1858,62 @@
         ],
         "responses": {
           "200": {
-            "description": "Email account details retrieved successfully"
+            "description": "Email account details retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SMTPEmailAccount"
+                }
+              }
+            }
           }
         }
       },
       "patch": {
-        "tags": ["Email Accounts"],
+        "tags": [
+          "Email Accounts"
+        ],
         "summary": "Update an email account",
-        "description": "Updates an existing email account",
+        "description": "Updates an existing email account. Only works with custom email account providers (SMTP/IMAP).",
         "operationId": "patch-email-accounts-id",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Email Account ID",
+            "description": "Email Account Id",
             "schema": {
               "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SMTPEmailAccount"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "Email account updated successfully"
+            "description": "Email account updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SMTPEmailAccount"
+                }
+              }
+            }
           }
         }
       },
       "delete": {
-        "tags": ["Email Accounts"],
+        "tags": [
+          "Email Accounts"
+        ],
         "summary": "Delete an email account",
         "description": "Deletes an existing email account",
         "operationId": "delete-email-accounts-id",
@@ -1450,7 +1922,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Email Account ID",
+            "description": "Email Account Id",
             "schema": {
               "type": "string"
             }
@@ -1463,162 +1935,11 @@
         }
       }
     },
-    "/shared-pages": {
-      "get": {
-        "tags": ["Shared Pages"],
-        "summary": "List all shared pages",
-        "description": "Returns a list of all shared pages",
-        "operationId": "get-shared-pages",
-        "responses": {
-          "200": {
-            "description": "Shared pages retrieved successfully"
-          }
-        }
-      },
-      "post": {
-        "tags": ["Shared Pages"],
-        "summary": "Create a shared page",
-        "description": "Creates a new shared page",
-        "operationId": "post-shared-pages",
-        "responses": {
-          "201": {
-            "description": "Shared page created successfully"
-          }
-        }
-      }
-    },
-    "/shared-pages/{id}": {
-      "get": {
-        "tags": ["Shared Pages"],
-        "summary": "Get a shared page",
-        "description": "Returns shared page details by ID",
-        "operationId": "get-shared-pages-id",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Shared Page ID",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Shared page details retrieved successfully"
-          }
-        }
-      },
-      "patch": {
-        "tags": ["Shared Pages"],
-        "summary": "Update a shared page",
-        "description": "Updates an existing shared page",
-        "operationId": "patch-shared-pages-id",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Shared Page ID",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Shared page updated successfully"
-          }
-        }
-      },
-      "delete": {
-        "tags": ["Shared Pages"],
-        "summary": "Delete a shared page",
-        "description": "Deletes an existing shared page",
-        "operationId": "delete-shared-pages-id",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Shared Page ID",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Shared page deleted successfully"
-          }
-        }
-      }
-    },
-    "/emails": {
-      "get": {
-        "tags": ["Emails"],
-        "summary": "List all emails",
-        "description": "Returns a list of all email messages",
-        "operationId": "get-emails",
-        "responses": {
-          "200": {
-            "description": "Emails retrieved successfully"
-          }
-        }
-      }
-    },
-    "/emails/{id}": {
-      "get": {
-        "tags": ["Emails"],
-        "summary": "Get an email",
-        "description": "Returns email details by ID",
-        "operationId": "get-emails-id",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Email ID",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Email details retrieved successfully"
-          }
-        }
-      }
-    },
-    "/emails/{id}/content": {
-      "get": {
-        "tags": ["Emails"],
-        "summary": "Get email content",
-        "description": "Returns the content of an email message",
-        "operationId": "get-emails-id-content",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Email ID",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Email content retrieved successfully"
-          }
-        }
-      }
-    },
     "/webhooks": {
       "get": {
-        "tags": ["Webhooks"],
+        "tags": [
+          "Webhooks"
+        ],
         "summary": "List all webhook subscriptions",
         "description": "Returns a list of all webhook subscriptions",
         "operationId": "get-webhooks",
@@ -1629,7 +1950,9 @@
         }
       },
       "post": {
-        "tags": ["Webhooks"],
+        "tags": [
+          "Webhooks"
+        ],
         "summary": "Create a webhook subscription",
         "description": "Creates a new webhook subscription",
         "operationId": "post-webhooks",
@@ -1640,101 +1963,11 @@
         }
       }
     },
-    "/webhooks/{id}": {
-      "get": {
-        "tags": ["Webhooks"],
-        "summary": "Get a webhook subscription",
-        "description": "Returns webhook subscription details by ID",
-        "operationId": "get-webhooks-id",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Webhook ID",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Webhook subscription details retrieved successfully"
-          }
-        }
-      },
-      "patch": {
-        "tags": ["Webhooks"],
-        "summary": "Update a webhook subscription",
-        "description": "Updates an existing webhook subscription",
-        "operationId": "patch-webhooks-id",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Webhook ID",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Webhook subscription updated successfully"
-          }
-        }
-      },
-      "delete": {
-        "tags": ["Webhooks"],
-        "summary": "Delete a webhook subscription",
-        "description": "Deletes an existing webhook subscription",
-        "operationId": "delete-webhooks-id",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Webhook ID",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Webhook subscription deleted successfully"
-          }
-        }
-      }
-    },
-    "/webhooks/{id}/logs": {
-      "get": {
-        "tags": ["Webhooks"],
-        "summary": "Get webhook logs",
-        "description": "Returns logs for a webhook subscription",
-        "operationId": "get-webhooks-id-logs",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Webhook ID",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Webhook logs retrieved successfully"
-          }
-        }
-      }
-    },
     "/reports/email": {
       "get": {
-        "tags": ["Reports"],
+        "tags": [
+          "Reports"
+        ],
         "summary": "Generate email report",
         "description": "Generates a report about email activities",
         "operationId": "get-reports-email",
@@ -1747,16 +1980,18 @@
     },
     "/reports/download/{id}": {
       "get": {
-        "tags": ["Reports"],
+        "tags": [
+          "Reports"
+        ],
         "summary": "Download a report",
-        "description": "Downloads a generated report by ID",
+        "description": "Downloads a generated report by Id",
         "operationId": "get-reports-download-id",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Report ID",
+            "description": "Report Id",
             "schema": {
               "type": "string"
             }
@@ -1769,22 +2004,11 @@
         }
       }
     },
-    "/reports/contacts/status-changes": {
-      "get": {
-        "tags": ["Reports"],
-        "summary": "Get contacts status changes",
-        "description": "Returns a report of contacts with status changes",
-        "operationId": "get-reports-contacts-status-changes",
-        "responses": {
-          "200": {
-            "description": "Contact status changes report retrieved successfully"
-          }
-        }
-      }
-    },
     "/branded-links": {
       "get": {
-        "tags": ["Branded Links"],
+        "tags": [
+          "Branded Links"
+        ],
         "summary": "List all branded links",
         "description": "Returns a list of all branded links",
         "operationId": "get-branded-links",
@@ -1795,7 +2019,9 @@
         }
       },
       "post": {
-        "tags": ["Branded Links"],
+        "tags": [
+          "Branded Links"
+        ],
         "summary": "Create a branded link",
         "description": "Creates a new branded link",
         "operationId": "post-branded-links",
@@ -1808,16 +2034,18 @@
     },
     "/branded-links/{id}": {
       "get": {
-        "tags": ["Branded Links"],
+        "tags": [
+          "Branded Links"
+        ],
         "summary": "Get a branded link",
-        "description": "Returns branded link details by ID",
+        "description": "Returns branded link details by Id",
         "operationId": "get-branded-links-id",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Branded Link ID",
+            "description": "Branded Link Id",
             "schema": {
               "type": "string"
             }
@@ -1830,7 +2058,9 @@
         }
       },
       "patch": {
-        "tags": ["Branded Links"],
+        "tags": [
+          "Branded Links"
+        ],
         "summary": "Update a branded link",
         "description": "Updates an existing branded link",
         "operationId": "patch-branded-links-id",
@@ -1839,7 +2069,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Branded Link ID",
+            "description": "Branded Link Id",
             "schema": {
               "type": "string"
             }
@@ -1852,7 +2082,9 @@
         }
       },
       "delete": {
-        "tags": ["Branded Links"],
+        "tags": [
+          "Branded Links"
+        ],
         "summary": "Delete a branded link",
         "description": "Deletes an existing branded link",
         "operationId": "delete-branded-links-id",
@@ -1861,7 +2093,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "Branded Link ID",
+            "description": "Branded Link Id",
             "schema": {
               "type": "string"
             }
@@ -1873,52 +2105,814 @@
           }
         }
       }
-    },
-    "/branded-links/{id}/activate": {
-      "post": {
-        "tags": ["Branded Links"],
-        "summary": "Activate a branded link",
-        "description": "Activates an existing branded link",
-        "operationId": "post-branded-links-id-activate",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Branded Link ID",
-            "schema": {
-              "type": "string"
-            }
-          }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Sequence": {
+        "$ref": "#/components/schemas/sequence"
+      },
+      "EmailTemplate": {
+        "$ref": "#/components/schemas/email-template"
+      },
+      "SequenceInfo": {
+        "$ref": "#/components/schemas/sequence-info"
+      },
+      "SequenceStep": {
+        "$ref": "#/components/schemas/sequence-step"
+      },
+      "Contact": {
+        "$ref": "#/components/schemas/contact"
+      },
+      "BrandedLink": {
+        "$ref": "#/components/schemas/branded-link"
+      },
+      "BlackListItems": {
+        "title": "BlackListItems",
+        "type": "object",
+        "description": "Represents blacklist entries for domains and email addresses",
+        "required": [
+          "domains",
+          "emails"
         ],
-        "responses": {
-          "200": {
-            "description": "Branded link activated successfully"
+        "properties": {
+          "domains": {
+            "type": "array",
+            "description": "List of blocked domain names",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "spam-domain.com",
+              "malicious-site.net"
+            ]
+          },
+          "emails": {
+            "type": "array",
+            "description": "List of blocked email addresses",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "spam@example.com",
+              "unwanted@mail.com"
+            ]
           }
         }
-      }
-    },
-    "/branded-links/{id}/deactivate": {
-      "post": {
-        "tags": ["Branded Links"],
-        "summary": "Deactivate a branded link",
-        "description": "Deactivates an existing branded link",
-        "operationId": "post-branded-links-id-deactivate",
-        "parameters": [
+      },
+      "SMTPEmailAccount": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the SMTP email account"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "The email address used for sending emails"
+          },
+          "dailyLimit": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "The maximum number of emails you can send per day"
+          },
+          "senderName": {
+            "type": "string",
+            "description": "The name that will be displayed as the sender in email recipients' inboxes"
+          },
+          "smtpHost": {
+            "type": "string",
+            "description": "The hostname or IP address of the Simple Mail Transfer Protocol (SMTP) server used for sending emails"
+          },
+          "smtpPort": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 65535,
+            "description": "The port number used for communication with the SMTP server (typically 465 for SMTP with SSL/TLS encryption)"
+          },
+          "smtpPassword": {
+            "type": "string",
+            "description": "The password for the email address used for sending emails"
+          },
+          "smtpSsl": {
+            "type": "boolean",
+            "default": true,
+            "description": "This option controls whether SSL is used for the SMTP connection"
+          },
+          "imapHost": {
+            "type": "string",
+            "description": "The hostname or IP address of the Internet Message Access Protocol (IMAP) server used for receiving emails"
+          },
+          "imapPort": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 65535,
+            "description": "The port number used for communication with the IMAP server (typically 993 for IMAP with SSL/TLS encryption)"
+          },
+          "imapPassword": {
+            "type": "string",
+            "description": "The password for the email address used for receiving emails"
+          },
+          "imapSsl": {
+            "type": "boolean",
+            "default": true,
+            "description": "This option controls whether SSL is used for the IMAP connection"
+          }
+        },
+        "required": [
+          "email",
+          "dailyLimit",
+          "senderName",
+          "smtpHost",
+          "smtpPort",
+          "smtpPassword",
+          "imapHost",
+          "imapPort",
+          "imapPassword"
+        ],
+        "examples": [
           {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Branded Link ID",
-            "schema": {
+            "id": 1,
+            "email": "user@example.com",
+            "dailyLimit": 1000,
+            "senderName": "John Doe",
+            "smtpHost": "smtp.example.com",
+            "smtpPort": 465,
+            "smtpPassword": "yourSmtpPassword123",
+            "smtpSsl": true,
+            "imapHost": "imap.example.com",
+            "imapPort": 993,
+            "imapPassword": "yourImapPassword123",
+            "imapSsl": true
+          }
+        ]
+      },
+      "sequence-info": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the sequence"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the sequence"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "New",
+              "Active",
+              "Paused",
+              "Archived"
+            ],
+            "description": "Current status of the sequence"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Sequence creation date"
+          },
+          "isArchived": {
+            "type": "boolean",
+            "description": "Indicates if the sequence is archived"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "status"
+        ],
+        "example": {
+          "id": 12345,
+          "name": "Sales Outreach",
+          "status": "Active",
+          "created": "2024-03-08T10:00:00Z",
+          "isArchived": false
+        }
+      },
+      "sequence": {
+        "type": "object",
+        "required": [
+          "name",
+          "emailAccounts",
+          "settings"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the sequence"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the sequence"
+          },
+          "emailAccounts": {
+            "type": "array",
+            "items": {
               "type": "string"
+            },
+            "description": "Email accounts used to send emails for this sequence"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "New",
+              "Active",
+              "Paused"
+            ],
+            "description": "Current sequence status"
+          },
+          "scheduleId": {
+            "type": "integer",
+            "description": "Schedule Id. Default user schedule is used if omitted"
+          },
+          "isArchived": {
+            "type": "boolean",
+            "description": "Indicates if the sequence is archived"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Sequence creation date in UTC"
+          },
+          "settings": {
+            "type": "object",
+            "required": [
+              "emailsCountPerDay",
+              "daysToFinishProspect",
+              "emailSendingDelaySeconds",
+              "dailyThrottling",
+              "disableOpensTracking",
+              "repliesHandlingType",
+              "enableLinksTracking"
+            ],
+            "properties": {
+              "emailsCountPerDay": {
+                "type": "integer",
+                "description": "Maximum number of emails sent daily"
+              },
+              "daysToFinishProspect": {
+                "type": "integer",
+                "description": "Days taken for a prospect to finish"
+              },
+              "emailSendingDelaySeconds": {
+                "type": "integer",
+                "description": "Delay between sending emails in seconds"
+              },
+              "dailyThrottling": {
+                "type": "integer",
+                "description": "Number of prospects processed within 24-hour period"
+              },
+              "disableOpensTracking": {
+                "type": "boolean",
+                "description": "Whether to disable email open tracking"
+              },
+              "repliesHandlingType": {
+                "type": "string",
+                "enum": [
+                  "Mark person as finished",
+                  "Continue sending emails"
+                ],
+                "description": "How replies are handled"
+              },
+              "enableLinksTracking": {
+                "type": "boolean",
+                "description": "Whether to enable link tracking"
+              }
+            }
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "number",
+                "inMinutesCount"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "Unique identifier for the step"
+                },
+                "number": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "description": "Sequential step number, must start from 1"
+                },
+                "inMinutesCount": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Minutes delay, ≥0 for first step, >1 for others"
+                },
+                "templates": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "description": "Email templates for this step"
+                  }
+                }
+              }
             }
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Branded link deactivated successfully"
+        },
+        "example": {
+          "id": 123,
+          "name": "Sales Outreach 2024",
+          "emailAccounts": [
+            "sales@company.com",
+            "outreach@company.com"
+          ],
+          "status": "Active",
+          "scheduleId": 456,
+          "isArchived": false,
+          "created": "2024-03-08T14:30:00Z",
+          "settings": {
+            "emailsCountPerDay": 50,
+            "daysToFinishProspect": 14,
+            "emailSendingDelaySeconds": 30,
+            "dailyThrottling": 200,
+            "disableOpensTracking": false,
+            "repliesHandlingType": "Mark person as finished",
+            "enableLinksTracking": true
+          },
+          "steps": [
+            {
+              "id": 1,
+              "number": 1,
+              "inMinutesCount": 0,
+              "templates": []
+            },
+            {
+              "id": 2,
+              "number": 2,
+              "inMinutesCount": 1440,
+              "templates": []
+            }
+          ]
+        }
+      },
+      "sequence-step": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the step"
+          },
+          "number": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Sequential number for the step. Must be a sequence starting from 1"
+          },
+          "inMinutesCount": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Count of minutes. ≥ '0' for the first step and > '1' for subsequent steps"
+          },
+          "templates": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "Template Id"
+                },
+                "subject": {
+                  "type": "string",
+                  "description": "Email subject"
+                },
+                "body": {
+                  "type": "string",
+                  "description": "Email body content"
+                }
+              },
+              "required": [
+                "id",
+                "subject",
+                "body"
+              ]
+            },
+            "description": "List containing campaign step template data"
           }
+        },
+        "required": [
+          "number",
+          "inMinutesCount",
+          "templates"
+        ],
+        "example": {
+          "id": "step123",
+          "number": 1,
+          "inMinutesCount": 0,
+          "templates": [
+            {
+              "id": 456,
+              "subject": "Introduction Email",
+              "body": "Hi {{firstName}},\n\nI wanted to reach out regarding..."
+            }
+          ]
+        }
+      },
+      "contact": {
+        "type": "object",
+        "required": [
+          "email"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Primary email address"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "First name"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name"
+          },
+          "fullName": {
+            "type": "string",
+            "description": "Auto-generated full name"
+          },
+          "title": {
+            "type": "string",
+            "description": "Job title"
+          },
+          "company": {
+            "type": "string",
+            "description": "Organization name"
+          },
+          "domain": {
+            "type": "string",
+            "description": "Email domain"
+          },
+          "city": {
+            "type": "string",
+            "description": "City of residence"
+          },
+          "state": {
+            "type": "string",
+            "description": "State/province"
+          },
+          "country": {
+            "type": "string",
+            "description": "Country"
+          },
+          "timeZoneId": {
+            "type": "string",
+            "description": "Timezone identifier"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Phone number"
+          },
+          "phoneStatus": {
+            "type": "string",
+            "description": "Phone validation status"
+          },
+          "linkedInProfile": {
+            "type": "string",
+            "format": "uri",
+            "description": "LinkedIn profile URL"
+          },
+          "linkedInSalesNavigator": {
+            "type": "string",
+            "format": "uri",
+            "description": "Sales Navigator URL"
+          },
+          "linkedInRecruiter": {
+            "type": "string",
+            "format": "uri",
+            "description": "Recruiter URL"
+          },
+          "companySize": {
+            "type": "string",
+            "description": "Organization employee count"
+          },
+          "industry": {
+            "type": "string",
+            "description": "Business sector"
+          },
+          "notes": {
+            "type": "string",
+            "description": "Additional information"
+          },
+          "addingDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp"
+          },
+          "customFields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "description": "Field identifier"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "Field content"
+                }
+              },
+              "required": [
+                "key",
+                "value"
+              ]
+            },
+            "description": "User-defined fields"
+          }
+        },
+        "example": {
+          "id": 12345,
+          "email": "john.doe@company.com",
+          "firstName": "John",
+          "lastName": "Doe",
+          "fullName": "John Doe",
+          "title": "Senior Product Manager",
+          "company": "Tech Solutions Inc",
+          "domain": "company.com",
+          "city": "San Francisco",
+          "state": "CA",
+          "country": "United States",
+          "timeZoneId": "America/Los_Angeles",
+          "phone": "+1-415-555-0123",
+          "phoneStatus": "verified",
+          "linkedInProfile": "https://www.linkedin.com/in/johndoe",
+          "linkedInSalesNavigator": "https://www.linkedin.com/sales/profile/123456",
+          "linkedInRecruiter": "https://www.linkedin.com/recruiter/profile/789012",
+          "companySize": "501-1000",
+          "industry": "Software & Technology",
+          "notes": "Met at SaaS Conference 2024",
+          "addingDate": "2024-03-08T10:00:00Z",
+          "customFields": [
+            {
+              "key": "leadSource",
+              "value": "Conference"
+            },
+            {
+              "key": "budget",
+              "value": "100k-250k"
+            }
+          ]
+        }
+      },
+      "template": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The Id of the template"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the template"
+          },
+          "subject": {
+            "type": "string",
+            "description": "The subject of the template"
+          },
+          "body": {
+            "type": "string",
+            "description": "The body of the template"
+          },
+          "categoryId": {
+            "type": "integer",
+            "description": "The category of the template"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "example": {
+          "id": 12345,
+          "name": "Sales Follow-up",
+          "subject": "Re: Our previous conversation",
+          "body": "Hi {{firstName}},\n\nI hope this email finds you well. I wanted to follow up on our previous conversation about...",
+          "categoryId": "123"
+        }
+      },
+      "email-template": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the email template"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the template"
+          },
+          "subject": {
+            "type": "string",
+            "description": "Email subject line"
+          },
+          "body": {
+            "type": "object",
+            "properties": {
+              "html": {
+                "type": "string",
+                "description": "HTML version of the email body"
+              },
+              "text": {
+                "type": "string",
+                "description": "Plain text version of the email body"
+              }
+            },
+            "required": [
+              "html",
+              "text"
+            ],
+            "description": "Email body content in both HTML and text formats"
+          },
+          "category": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "description": "Category identifier"
+              },
+              "name": {
+                "type": "string",
+                "description": "Category name"
+              }
+            },
+            "required": [
+              "id",
+              "name"
+            ],
+            "description": "Template category information"
+          },
+          "variables": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Variable name"
+                },
+                "defaultValue": {
+                  "type": "string",
+                  "description": "Default value for the variable"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description of what the variable is used for"
+                }
+              },
+              "required": [
+                "name"
+              ]
+            },
+            "description": "List of variables used in the template"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Template creation date"
+          },
+          "modified": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Template last modification date"
+          },
+          "isArchived": {
+            "type": "boolean",
+            "description": "Whether the template is archived"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "subject",
+          "body"
+        ],
+        "example": {
+          "id": 12345,
+          "name": "Product Demo Follow-up",
+          "subject": "Next steps after {{company}} demo",
+          "body": {
+            "html": "<html><body><p>Hi {{firstName}},</p><p>Thank you for attending the demo today. I wanted to follow up on...</p></body></html>",
+            "text": "Hi {{firstName}},\n\nThank you for attending the demo today. I wanted to follow up on..."
+          },
+          "category": {
+            "id": 1,
+            "name": "Sales Follow-ups"
+          },
+          "variables": [
+            {
+              "name": "firstName",
+              "defaultValue": "",
+              "description": "Recipient's first name"
+            },
+            {
+              "name": "company",
+              "defaultValue": "",
+              "description": "Company name"
+            }
+          ],
+          "created": "2024-03-08T10:00:00Z",
+          "modified": "2024-03-08T15:30:00Z",
+          "isArchived": false
+        }
+      },
+      "branded-link": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the branded link"
+          },
+          "domain": {
+            "type": "string",
+            "format": "hostname",
+            "description": "Domain name for the branded link"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Active",
+              "Pending",
+              "Failed"
+            ],
+            "description": "Current status of the domain verification"
+          },
+          "verificationRecord": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "TXT",
+                  "CNAME"
+                ],
+                "description": "Type of DNS record for verification"
+              },
+              "host": {
+                "type": "string",
+                "description": "Host record that needs to be added to DNS"
+              },
+              "value": {
+                "type": "string",
+                "description": "Value that needs to be set in the DNS record"
+              }
+            },
+            "required": [
+              "type",
+              "host",
+              "value"
+            ],
+            "description": "DNS record information required for domain verification"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date when the branded link was created"
+          },
+          "lastVerificationAttempt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date of the last verification attempt"
+          },
+          "isDefault": {
+            "type": "boolean",
+            "description": "Whether this is the default branded domain"
+          },
+          "errorMessage": {
+            "type": "string",
+            "description": "Error message if verification failed"
+          }
+        },
+        "required": [
+          "id",
+          "domain",
+          "status",
+          "verificationRecord"
+        ],
+        "example": {
+          "id": 12345,
+          "domain": "links.company.com",
+          "status": "Active",
+          "verificationRecord": {
+            "type": "TXT",
+            "host": "_reply-verify.links.company.com",
+            "value": "reply-verification=abc123def456"
+          },
+          "created": "2024-03-08T10:00:00Z",
+          "lastVerificationAttempt": "2024-03-08T10:05:00Z",
+          "isDefault": true,
+          "errorMessage": null
         }
       }
     }

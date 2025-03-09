@@ -36,7 +36,7 @@
                     ]
                   },
                   {
-                    "group": "Sequence Steps",
+                    "group": "Sequences Steps",
                     "pages": [
                       "api-reference/sequences/sequence-steps/get-steps",
                       "api-reference/sequences/sequence-steps/add-step",

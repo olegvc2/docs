@@ -8,7 +8,7 @@
     "dark": "#15803D"
   },
   "favicon": "/favicon.svg",
-  "api": { "openapi": "./api.json" },
+  "api": { "openapi": "./api-reference/api.json" },
   "navigation": {
     "versions": [
       {
@@ -21,7 +21,7 @@
           {
             "group": "API Documentation",
             "openapi": {
-            "source": "/api-reference/api.json"
+            "source": "./api-reference/api.json"
             }
           },
           {

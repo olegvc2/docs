@@ -24,9 +24,6 @@
           },
           {
             "group": "API Documentation",
-            "pages": [
-              "api-reference/sequences/sequences"
-            ],
             "openapi": {
             "source": "/api-reference/api.json"
             }
